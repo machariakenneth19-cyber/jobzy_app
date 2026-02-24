@@ -14,24 +14,23 @@
         .page-section { display: none; }
         .page-active { display: block; }
         
+        /* Visitor & Dashboard UI */
         .money-text { font-size: 2.2rem; font-weight: 900; color: #000; letter-spacing: -1.5px; }
         .location-text { color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: flex; align-items: center; gap: 6px; letter-spacing: 2px; }
         .job-card { border: 1px solid #f1f5f9; border-radius: 2.5rem; transition: 0.4s ease; background: #fff; height: 100%; display: flex; flex-direction: column; }
         .job-card:hover { transform: translateY(-10px); box-shadow: 0 30px 50px rgba(0,0,0,0.06); border-color: #2563eb; }
         
-        /* The Glowing Apply Button (Post-Payment Style) */
+        /* The Post-Payment Glow */
         .btn-apply-glow {
-            background: #e0f2fe; /* Sky Creamy Blue */
-            color: #0369a1;
-            border: 2px solid #7dd3fc;
+            background: #e0f2fe !important; 
+            color: #0369a1 !important;
+            border: 2px solid #7dd3fc !important;
             box-shadow: 0 0 20px rgba(125, 211, 252, 0.6);
             animation: pulseGlow 2s infinite;
         }
-
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 10px rgba(125, 211, 252, 0.4); }
+            0%, 100% { box-shadow: 0 0 10px rgba(125, 211, 252, 0.4); }
             50% { box-shadow: 0 0 25px rgba(125, 211, 252, 0.8); }
-            100% { box-shadow: 0 0 10px rgba(125, 211, 252, 0.4); }
         }
 
         .btn-ready { animation: ledRotate 1.5s infinite; border: 2px solid #2563eb !important; background: #1d4ed8 !important; color: white !important; cursor: pointer; }
@@ -92,16 +91,33 @@
         </section>
 
         <section class="max-w-7xl mx-auto px-6 pb-32">
+            <h3 class="text-[10px] font-black uppercase tracking-[0.5em] mb-16 text-slate-300 text-center">Live Market Previews</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 <div class="job-card p-10">
                     <div class="flex justify-between items-center mb-8"><i class="fas fa-network-wired text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-slate-100 px-3 py-1 rounded-full uppercase">Relocation</span></div>
                     <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Infrastructure Architect</h4>
                     <div class="money-text mb-2">€ 5,800.00</div>
                     <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> Berlin, Germany</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">European data centers are expanding rapidly and lack the technical oversight to manage physical hardware scaling. This role is vital for global cloud services.</p>
+                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">European data centers are expanding rapidly and lack the technical oversight to manage physical hardware scaling. This role is vital to ensuring 99.9% uptime for global cloud services.</p>
                     <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
                 </div>
+                <div class="job-card p-10">
+                    <div class="flex justify-between items-center mb-8"><i class="fas fa-balance-scale text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Remote</span></div>
+                    <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Corporate Legal Liaison</h4>
+                    <div class="money-text mb-2">£ 4,500.00</div>
+                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> London, UK</div>
+                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">International firms require remote legal analysts to manage contract compliance across different time zones to avoid litigation delays.</p>
+                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
                 </div>
+                <div class="job-card p-10 border-blue-100 border-2">
+                    <div class="flex justify-between items-center mb-8"><i class="fas fa-user-md text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-slate-100 px-3 py-1 rounded-full uppercase">On-Site</span></div>
+                    <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Surgical Consultant</h4>
+                    <div class="money-text mb-2">$ 8,200.00</div>
+                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> California, USA</div>
+                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Medical facilities require expert diagnostic managers to oversee surgical throughput. High priority for qualified medical practitioners.</p>
+                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -131,11 +147,8 @@
 
     <main id="dashboard-page" class="page-section py-16 px-6 bg-white min-h-screen">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-12">
-                <h3 class="text-4xl font-black uppercase tracking-tighter">Global Access Hub</h3>
-                <p class="text-slate-400 font-bold uppercase text-xs tracking-widest mt-2">Verified Opportunities</p>
-            </div>
-
+            <h3 class="text-4xl font-black uppercase mb-12">Search Terminal</h3>
+            
             <div class="p-10 rounded-[3.5rem] shadow-2xl border-2 border-slate-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
                 <div class="flex flex-col gap-2">
                     <label class="text-[9px] font-black uppercase text-slate-400 ml-2 italic">1. Continent</label>
@@ -156,14 +169,16 @@
                 <div class="lg:col-span-4"><button id="s-b" onclick="performSearch()" class="w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Global Search</button></div>
             </div>
 
-            <div id="job-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                </div>
+            <div id="job-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
         </div>
     </main>
 
-    <script>
-        // ... (Supabase config remains)
+    <footer class="bg-slate-900 py-20 px-6 text-center text-white">
+        <h4 class="text-2xl font-black uppercase mb-4 tracking-widest">JOBZZY</h4>
+        <div class="text-[10px] font-bold text-slate-700 uppercase tracking-widest">Developed by Macharia Kenneth &copy; 2026</div>
+    </footer>
 
+    <script>
         const c_data = {
             Af: ["Kenya", "Rwanda", "Mauritius", "South Africa", "Ghana", "Tanzania", "Egypt", "Zambia"],
             As: ["Japan", "Singapore", "South Korea", "UAE", "Qatar", "China", "India"],
@@ -171,53 +186,36 @@
             Am: ["California", "Texas", "New York", "Florida", "Canada"]
         };
 
-        const jobTemplates = [
-            { title: "Senior Clinical Manager", pay: "$ 7,500", icon: "fa-user-md", link: "https://www.mayoclinic.org/jobs" },
-            { title: "Remote System Engineer", pay: "€ 6,200", icon: "fa-server", link: "https://www.siemens.com/global/en/company/jobs.html" },
-            { title: "Corporate Legal Counsel", pay: "£ 5,800", icon: "fa-gavel", link: "https://www.cliffordchance.com/careers.html" },
-            { title: "Global Logistics Director", pay: "$ 5,900", icon: "fa-truck-moving", link: "https://www.dhl.com/global-en/home/careers.html" }
+        const templates = [
+            { t: "Senior Clinical Manager", p: "$ 7,500", i: "fa-user-md", l: "https://www.mayoclinic.org/jobs" },
+            { t: "Remote System Engineer", p: "€ 6,200", i: "fa-server", l: "https://www.siemens.com/global/en/company/jobs.html" },
+            { t: "Corporate Legal Counsel", p: "£ 5,800", i: "fa-gavel", l: "https://www.cliffordchance.com/careers.html" },
+            { t: "Global Logistics Director", p: "$ 5,900", i: "fa-truck-moving", l: "https://www.dhl.com/global-en/home/careers.html" }
         ];
 
-        let hasPaid = false; // This will be toggled once the payment page is done
+        let hasPaid = false;
 
         function performSearch() {
             const country = document.getElementById('c-sel').value;
             const feed = document.getElementById('job-feed');
             feed.innerHTML = '';
-            
-            // Create 40 dynamic jobs for the selected country
             for (let i = 1; i <= 40; i++) {
-                const template = jobTemplates[i % 4];
-                const card = document.createElement('div');
-                card.className = 'job-card p-10';
-                card.innerHTML = `
-                    <div class="flex justify-between items-center mb-8">
-                        <i class="fas ${template.icon} text-blue-700 text-2xl"></i>
-                        <span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Verified Spot</span>
-                    </div>
-                    <h4 class="text-2xl font-black uppercase mb-3 leading-tight">${template.title} #${i}</h4>
-                    <div class="money-text mb-2">${template.pay}</div>
-                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${country}</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Verified high-priority opening in ${country}. Direct application to official portal available upon professional clearance.</p>
-                    <button onclick="handleApply('${template.link}')" id="btn-${i}" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest ${hasPaid ? 'btn-apply-glow' : ''}">
-                        ${hasPaid ? 'Apply Now' : 'Unlock Application'}
-                    </button>
-                `;
-                feed.appendChild(card);
-            }
-            window.scrollTo({ top: feed.offsetTop - 100, behavior: 'smooth' });
-        }
-
-        function handleApply(link) {
-            if (!hasPaid) {
-                alert("GLOBAL VERIFICATION REQUIRED: You must complete the professional clearance payment to access direct application links.");
-                // showPage('payment'); <- Next step!
-            } else {
-                window.open(link, '_blank');
+                const temp = templates[i % 4];
+                feed.innerHTML += `
+                    <div class="job-card p-10">
+                        <div class="flex justify-between items-center mb-8"><i class="fas ${temp.i} text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Verified Spot</span></div>
+                        <h4 class="text-2xl font-black uppercase mb-3 leading-tight">${temp.t} #${i}</h4>
+                        <div class="money-text mb-2">${temp.p}</div>
+                        <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${country}</div>
+                        <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Verified high-priority opening in ${country}. Direct application portal available upon professional clearance.</p>
+                        <button onclick="handleApply('${temp.l}')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest ${hasPaid ? 'btn-apply-glow' : ''}">
+                            ${hasPaid ? 'Apply Now' : 'Unlock Application'}
+                        </button>
+                    </div>`;
             }
         }
 
-        // ... (updCountries, chk, showPage, toggleNav remain the same)
+        function handleApply(link) { if(!hasPaid) { alert("GLOBAL VERIFICATION REQUIRED: Complete clearance payment to unlock links."); } else { window.open(link, '_blank'); } }
         function updCountries() {
             const v = document.getElementById('cont').value;
             const w = document.getElementById('c-wrap');
