@@ -167,6 +167,11 @@
         </div>
     </main>
 
+    <footer class="bg-slate-900 py-20 px-6 text-center text-white">
+        <h4 class="text-2xl font-black uppercase mb-4 tracking-widest">JOBZZY</h4>
+        <div class="text-[10px] font-bold text-slate-700 uppercase tracking-widest">Developed by Macharia Kenneth &copy; 2026</div>
+    </footer>
+
     <script>
         const c_data = {
             Af: ["Kenya", "Rwanda", "South Africa", "Nigeria", "Tanzania", "Ghana"],
@@ -178,15 +183,24 @@
         const hsTitles = ["Airport Ground Staff", "Cruise Deck Assistant", "Warehouse Logistics Lead", "International Courier", "Hospitality Liaison", "Security Fleet Officer", "Retail Operations Lead", "Delivery Systems Manager", "Customs Agent Assistant", "Event Setup Coordinator", "Port Terminal Assistant", "Global Mail Dispatcher", "Inventory Specialist", "Property Caretaker", "Customer Support Rep", "Brand Ambassador", "Office Admin Assistant", "Supply Route Driver", "Technical Field Hand", "Logistics Support", "Packaging Specialist", "Site Guard", "Dock Worker", "Ramp Agent", "Stock Controller", "Courier Hub Lead", "Hotel Floor Lead", "Front Desk Assistant", "Transit Monitor", "Store Supervisor", "Ground Crew", "Safety Inspector", "Cargo Handler", "Fleet Support", "Order Picker", "Dispatch Assistant", "Gate Controller", "Loading Lead", "Terminal Guard", "Service Associate"];
         const profTitles = ["Senior Systems Architect", "Clinical Trial Manager", "Corporate Legal Counsel", "Biomedical Engineer", "Full Stack Developer", "Financial Risk Analyst", "Public Health Director", "AI Product Owner", "Cyber Defense Lead", "Infrastructure Consultant", "Legal Compliance Officer", "Surgical Operations Manager", "Data Science Principal", "Network Security Lead", "Global HR Strategist", "Renewable Energy Engineer", "International Auditor", "Marketing Analytics Lead", "Supply Chain Director", "Project Lead Engineer", "Cloud Solutions Lead", "Cardiovascular Specialist", "Macroeconomic Analyst", "Neuroscience Researcher", "Software Integrity Lead", "Trade Law Consultant", "Structural Engineer", "Aviation Safety Officer", "DevOps Manager", "Blockchain Architect", "Tax Litigation Expert", "Clinical Pathologist", "Investment Strategist", "Robotics Technician", "Environmental Analyst", "Energy Grid Manager", "Pharma Operations Lead", "Algorithm Engineer", "Strategic Policy Advisor", "Health Systems Manager"];
 
+        // Currency Mapping Logic
+        function getCurrency(country) {
+            if (country === "UK") return "£";
+            if (["Germany", "France", "Norway", "Switzerland"].includes(country)) return "€";
+            if (["UAE", "Qatar"].includes(country)) return "AED";
+            return "$"; // Default for Kenya, USA, Canada, and others
+        }
+
         function loadWindowShopping() {
             const feed = document.getElementById('job-feed');
             feed.innerHTML = '';
-            const worlds = ["USA", "Germany", "Japan", "South Africa", "UAE", "UK", "Canada", "Singapore", "Kenya", "France", "Norway", "Qatar", "Australia", "Switzerland", "Brazil", "China", "India", "Nigeria", "Tanzania", "Ghana"];
+            const worlds = ["USA", "Germany", "Japan", "South Africa", "UAE", "UK", "Canada", "Singapore", "Kenya", "France"];
             
             for (let i = 1; i <= 20; i++) {
                 const title = profTitles[i % profTitles.length];
                 const country = worlds[i % worlds.length];
-                const pay = `$ ${7200 + (i * 35)}`;
+                const symbol = getCurrency(country);
+                const pay = `${symbol} ${7200 + (i * 35)}.00`;
                 feed.innerHTML += renderCard(title, pay, country, i);
             }
         }
@@ -195,12 +209,13 @@
             const country = document.getElementById('c-sel').value;
             const qual = document.getElementById('d-q').value;
             const feed = document.getElementById('job-feed');
+            const symbol = getCurrency(country);
             feed.innerHTML = '';
 
             let titles = (qual === 'h') ? hsTitles : profTitles;
             for (let i = 1; i <= 40; i++) {
                 const title = titles[(i - 1) % titles.length];
-                const pay = (qual === 'h') ? `$ ${2800 + (i * 12)}` : `$ ${7200 + (i * 45)}`;
+                const pay = (qual === 'h') ? `${symbol} ${2800 + (i * 12)}.00` : `${symbol} ${7200 + (i * 45)}.00`;
                 feed.innerHTML += renderCard(title, pay, country, i);
             }
         }
