@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,7 +52,33 @@
             <p class="text-xl md:text-2xl font-bold text-slate-600 max-w-2xl mx-auto">Your location shouldn't limit your income. We bridge the gap between global talent and elite international careers.</p>
         </header>
 
-        <section class="max-w-7xl mx-auto px-6 pb-32 mt-20">
+        <section class="max-w-6xl mx-auto -mt-10 px-6 mb-24">
+            <div class="bg-white p-8 md:p-12 rounded-[3.5rem] shadow-2xl border-2 border-slate-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">1. Continent</label>
+                        <select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer"><option>Africa Region</option><option>Asia Region</option><option>European Union</option><option>The Americas</option></select>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">2. Qualification</label>
+                        <select id="v-qual" onchange="const b = document.getElementById('v-exp'); b.style.display = (this.value === 'e') ? 'flex' : 'none';" class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer">
+                            <option value="n">High School Certificate</option><option value="e">Diploma</option><option value="e">Bachelor's Degree</option><option value="e">Master's Degree</option>
+                        </select>
+                    </div>
+                    <div id="v-exp" class="hidden-box flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-blue-600 ml-2 italic">3. Expertise</label>
+                        <input type="text" placeholder="Law, Medicine..." class="w-full p-5 bg-blue-50 rounded-2xl font-bold text-sm outline-none border-2 border-blue-100">
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">4. Mode</label>
+                        <select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer"><option>Remote</option><option>On-Site</option></select>
+                    </div>
+                </div>
+                <button onclick="showPage('signup')" class="w-full mt-10 bg-blue-700 text-white py-6 rounded-[2rem] font-black uppercase text-sm shadow-xl">Search Global Opportunities</button>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-6 pb-32">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 <div class="job-card p-10">
                     <div class="flex justify-between items-center mb-8"><i class="fas fa-network-wired text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-slate-100 px-3 py-1 rounded-full uppercase">Relocation</span></div>
@@ -108,13 +134,10 @@
     <main id="dashboard-page" class="page-section py-16 px-6 bg-white min-h-screen">
         <div class="max-w-7xl mx-auto">
             <h3 class="text-4xl font-black uppercase mb-12">Search Terminal</h3>
-            
             <div class="p-10 rounded-[3.5rem] shadow-2xl border-2 border-slate-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
                 <div class="flex flex-col gap-2">
                     <label class="text-[9px] font-black uppercase text-slate-400 ml-2 italic">1. Continent</label>
-                    <select id="cont" onchange="updCountries(); chk();" class="input-field">
-                        <option value="">Select...</option><option value="Af">Africa</option><option value="As">Asia</option><option value="Eu">Europe</option><option value="Am">Americas</option>
-                    </select>
+                    <select id="cont" onchange="updCountries(); chk();" class="input-field"><option value="">Select...</option><option value="Af">Africa</option><option value="As">Asia</option><option value="Eu">Europe</option><option value="Am">Americas</option></select>
                 </div>
                 <div id="c-wrap" class="hidden-box flex flex-col gap-2">
                     <label class="text-[9px] font-black uppercase text-blue-600 ml-2 italic">2. Country/State</label>
@@ -122,171 +145,48 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <label class="text-[9px] font-black uppercase text-slate-400 ml-2 italic">3. Qualification</label>
-                    <select id="d-q" onchange="chk()" class="input-field">
-                        <option value="">Level...</option>
-                        <option value="h">High School Certificate</option>
-                        <option value="d">Diploma</option>
-                        <option value="b">Bachelor's Degree</option>
-                        <option value="p">Master's / PhD</option>
-                    </select>
+                    <select id="d-q" onchange="chk()" class="input-field"><option value="">Level...</option><option value="h">High School</option><option value="d">Diploma</option><option value="b">Bachelor's</option><option value="p">PhD</option></select>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label class="text-[9px] font-black uppercase text-blue-600 ml-2 italic">4. Expertise / Niche</label>
-                    <input type="text" id="d-i" oninput="chk()" placeholder="Medicine, IT, Trades..." class="input-field">
+                    <label class="text-[9px] font-black uppercase text-blue-600 ml-2 italic">4. Niche</label>
+                    <input type="text" id="d-i" oninput="chk()" placeholder="Medicine, IT..." class="input-field">
                 </div>
                 <div class="lg:col-span-4"><button id="s-b" onclick="performSearch()" class="w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Global Search</button></div>
             </div>
-
-            <h4 id="feed-title" class="text-xs font-black uppercase tracking-widest text-slate-400 mb-10">Premium Opportunities Feed</h4>
             <div id="job-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
         </div>
     </main>
 
-    <footer class="bg-slate-900 py-20 px-6 text-center text-white">
-        <h4 class="text-2xl font-black uppercase mb-4 tracking-widest">JOBZZY</h4>
-        <div class="text-[10px] font-bold text-slate-700 uppercase tracking-widest">Developed by Macharia Kenneth &copy; 2026</div>
-    </footer>
-
     <script>
-        const c_data = {
-            Af: ["Kenya", "Rwanda", "Mauritius", "South Africa", "Nigeria", "Ghana", "Tanzania", "Egypt", "Zambia", "Uganda"],
-            As: ["Japan", "Singapore", "South Korea", "UAE", "Qatar", "China", "India", "Malaysia", "Thailand", "Vietnam"],
-            Eu: ["Germany", "UK", "France", "Switzerland", "Norway", "Sweden", "Netherlands", "Ireland", "Italy", "Spain"],
-            Am: ["California", "Texas", "New York", "Florida", "Washington State", "Ontario, Canada", "British Columbia", "Brazil"]
-        };
-
+        const c_data = { Af: ["Kenya", "Rwanda", "South Africa", "Tanzania"], As: ["Japan", "UAE", "Singapore"], Eu: ["Germany", "UK", "Norway"], Am: ["USA", "Canada"] };
         const industries = {
-            "h": { // High School
-                titles: ["Logistics Coordinator", "Hospitality Lead", "Security Operations Manager", "Sales Representative", "Customer Success Lead", "Warehouse Supervisor", "Airport Ground Staff", "Fleet Dispatcher"],
-                icons: ["fa-truck", "fa-concierge-bell", "fa-shield-alt", "fa-tags", "fa-headset", "fa-boxes", "fa-plane-arrival", "fa-map-marked-alt"],
-                pay: ["$ 3,200", "€ 2,800", "£ 2,500", "AED 12,000"],
-                desc: [
-                    "Responsible for overseeing local distribution and managing supply chain efficiency to meet strict deadlines. You will handle team scheduling and ensure all safety protocols are followed in a fast-paced environment.",
-                    "Managing guest experiences and coordinating front-of-house operations for international hotel chains. This role requires high emotional intelligence and the ability to solve complex logistical challenges for travelers."
-                ]
-            },
-            "m": { // Medicine / Science
-                titles: ["Clinical Research Associate", "Surgical Lead", "Diagnostic Consultant", "Pharmacy Director", "Senior Epidemiologist", "Health Informatics Officer", "Biomedical Engineer", "Public Health Advisor"],
-                icons: ["fa-vial", "fa-user-md", "fa-microscope", "fa-pills", "fa-dna", "fa-file-medical", "fa-heartbeat", "fa-hospital-user"],
-                pay: ["$ 9,500", "€ 8,200", "£ 7,800", "CHF 10,500"],
-                desc: [
-                    "Directing complex medical trials and ensuring international compliance with healthcare regulations. You will collaborate with global researchers to validate new treatment protocols and manage data integrity.",
-                    "Leading a team of surgical specialists in a high-pressure clinical setting to improve patient outcomes. The role involves advanced diagnostic planning and the oversight of surgical technology implementation."
-                ]
-            },
-            "t": { // Tech / Engineering
-                titles: ["Full Stack Architect", "Cyber Security Analyst", "AI Implementation Lead", "Cloud Infrastructure Lead", "Data Science Manager", "Blockchain Developer", "Network Operations Lead", "DevOps Specialist"],
-                icons: ["fa-code", "fa-user-secret", "fa-robot", "fa-cloud", "fa-database", "fa-link", "fa-network-wired", "fa-terminal"],
-                pay: ["$ 8,800", "€ 7,500", "£ 6,900", "¥ 950,000"],
-                desc: [
-                    "Building and maintaining scalable cloud-based architectures for multinational corporations. This position requires deep expertise in modern framework implementation and high-availability systems design.",
-                    "Securing enterprise-level network infrastructures against sophisticated global cyber threats. You will develop defensive protocols, conduct penetration testing, and lead incident response teams."
-                ]
-            },
-            "l": { // Law / Finance
-                titles: ["Corporate Attorney", "Compliance Officer", "Financial Risk Manager", "International Arbitrator", "Senior Auditor", "Investment Strategist", "Tax Consultant", "Mergers Lead"],
-                icons: ["fa-gavel", "fa-balance-scale", "fa-chart-line", "fa-handshake", "fa-file-invoice-dollar", "fa-briefcase", "fa-university", "fa-landmark"],
-                pay: ["$ 10,200", "€ 9,000", "£ 8,500", "SGD 14,000"],
-                desc: [
-                    "Managing cross-border legal agreements and ensuring that all corporate activities align with international trade laws. You will represent the firm in complex negotiations and provide strategic risk assessment.",
-                    "Oversight of financial assets and risk mitigation strategies for large-scale investment portfolios. This role demands rigorous analysis of market trends and the ability to forecast economic shifts."
-                ]
-            }
+            "h": { titles: ["Logistics Coordinator", "Hospitality Lead", "Warehouse Supervisor"], icons: ["fa-truck", "fa-concierge-bell", "fa-boxes"], pay: ["$ 3,200"], desc: ["Overseeing local distribution and managing supply chain efficiency. This role requires immediate intake and strong coordination skills for global delivery networks."] },
+            "t": { titles: ["Systems Architect", "Cyber Analyst", "AI Implementation"], icons: ["fa-code", "fa-user-secret", "fa-robot"], pay: ["$ 8,800"], desc: ["Building scalable cloud architectures for multinational firms. Requires deep expertise in modern framework implementation and high-availability systems."] }
         };
-
-        function getIndustryType(niche, qual) {
-            if (qual === 'h') return 'h';
-            const n = niche.toLowerCase();
-            if (n.includes('med') || n.includes('doctor') || n.includes('science')) return 'm';
-            if (n.includes('law') || n.includes('fin') || n.includes('bank') || n.includes('account')) return 'l';
-            return 't'; // Default to Tech/Engineering
-        }
 
         function performSearch() {
             const country = document.getElementById('c-sel').value;
             const qual = document.getElementById('d-q').value;
-            const nicheInput = document.getElementById('d-i').value || "Professional";
             const feed = document.getElementById('job-feed');
-            
-            const indKey = getIndustryType(nicheInput, qual);
-            const ind = industries[indKey];
-            
+            const ind = industries[qual === 'h' ? 'h' : 't'];
             feed.innerHTML = '';
-            document.getElementById('feed-title').innerText = `40 Unique ${nicheInput} Opportunities found in ${country}`;
-
             for (let i = 1; i <= 40; i++) {
-                // Logic to ensure every title and description feels unique by combining variables
-                const titleIdx = (i + country.length) % ind.titles.length;
-                const iconIdx = titleIdx;
-                const payIdx = (i * 7) % ind.pay.length;
-                const descIdx = i % ind.desc.length;
-                
-                // Add a unique company name to every job
-                const companies = ["Global Horizon", "Quantum Corp", "Apex Solutions", "Vanguard Group", "Nexus International", "Summit Systems", "Legacy Partners", "Bridge Tech"];
-                const comp = companies[i % companies.length];
-
+                const idx = i % ind.titles.length;
                 feed.innerHTML += `
                     <div class="job-card p-10">
-                        <div class="flex justify-between items-center mb-8">
-                            <i class="fas ${ind.icons[iconIdx]} text-blue-700 text-2xl"></i>
-                            <span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Ref ID: ${1000 + i}</span>
-                        </div>
-                        <h4 class="text-2xl font-black uppercase mb-1 leading-tight">${ind.titles[titleIdx]}</h4>
-                        <div class="text-[10px] font-bold text-slate-400 uppercase mb-4 tracking-widest">at ${comp}</div>
-                        <div class="money-text mb-2">${ind.pay[payIdx]}</div>
-                        <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${country}</div>
-                        <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">
-                            ${ind.desc[descIdx]} This ${ind.titles[titleIdx]} position at ${comp} is a high-priority opening. You will be expected to drive innovation within the ${nicheInput} sector of ${country}.
-                        </p>
-                        <button onclick="alert('CLEARANCE REQUIRED: Complete professional verification to unlock this link.')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest">
-                            Unlock Application
-                        </button>
-                    </div>`;
-            }
-            window.scrollTo({ top: feed.offsetTop - 100, behavior: 'smooth' });
-        }
-
-        // --- AUTH & NAV LOGIC (LOCKED) ---
-        function showPage(id) { 
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active')); 
-            document.getElementById(id + '-page').classList.add('page-active'); 
-            if(id === 'dashboard') loadWindowShopping();
-            window.scrollTo(0,0); 
-        }
-
-        function loadWindowShopping() {
-            const feed = document.getElementById('job-feed');
-            feed.innerHTML = '';
-            const ind = industries['t'];
-            for (let i = 1; i <= 20; i++) {
-                const titleIdx = i % ind.titles.length;
-                feed.innerHTML += `
-                    <div class="job-card p-10">
-                        <div class="flex justify-between items-center mb-8"><i class="fas ${ind.icons[titleIdx]} text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Verified</span></div>
-                        <h4 class="text-2xl font-black uppercase mb-3 leading-tight">${ind.titles[titleIdx]}</h4>
+                        <div class="flex justify-between items-center mb-8"><i class="fas ${ind.icons[idx]} text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Ref #${1000+i}</span></div>
+                        <h4 class="text-2xl font-black uppercase mb-3 leading-tight">${ind.titles[idx]}</h4>
                         <div class="money-text mb-2">${ind.pay[0]}</div>
-                        <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> GLOBAL HUB</div>
-                        <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Browsing premium worldwide opportunities. Use the search bar above to filter by your specific country and niche expertise.</p>
+                        <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${country}</div>
+                        <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">${ind.desc[0]} This high-priority opening in ${country} is verified for direct application once cleared.</p>
                         <button class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Unlock Application</button>
                     </div>`;
             }
         }
 
-        function updCountries() {
-            const v = document.getElementById('cont').value;
-            const w = document.getElementById('c-wrap');
-            const s = document.getElementById('c-sel');
-            if(v) { w.style.display='flex'; s.innerHTML='<option value="">Country...</option>'+c_data[v].map(c=>`<option value="${c}">${c}</option>`).join(''); } 
-            else { w.style.display='none'; }
-        }
-
-        function chk() {
-            const r = document.getElementById('cont').value && document.getElementById('c-sel').value && document.getElementById('d-q').value;
-            const b = document.getElementById('s-b');
-            if(r) { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-ready'; b.innerHTML='Initiate Global Search <i class="fas fa-bolt ml-2"></i>'; }
-            else { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked'; b.innerHTML='Initiate Global Search'; }
-        }
-
+        function showPage(id) { document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active')); document.getElementById(id + '-page').classList.add('page-active'); if(id==='dashboard') performSearch(); window.scrollTo(0,0); }
+        function updCountries() { const v = document.getElementById('cont').value; const w = document.getElementById('c-wrap'); const s = document.getElementById('c-sel'); if(v) { w.style.display='flex'; s.innerHTML='<option value="">Country...</option>'+c_data[v].map(c=>`<option value="${c}">${c}</option>`).join(''); } else { w.style.display='none'; } }
+        function chk() { const r = document.getElementById('cont').value && document.getElementById('c-sel').value && document.getElementById('d-q').value; const b = document.getElementById('s-b'); if(r) { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-ready'; b.innerHTML='Initiate Global Search <i class="fas fa-bolt ml-2"></i>'; } else { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked'; b.innerHTML='Initiate Global Search'; } }
         function toggleNav() { document.getElementById('nav-auth').classList.add('hidden'); document.getElementById('nav-user').classList.remove('hidden'); }
     </script>
 </body>
