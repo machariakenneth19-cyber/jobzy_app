@@ -14,39 +14,37 @@
         .page-section { display: none; }
         .page-active { display: block; }
         
-        /* UI Elements */
+        /* Visitor Page Styles */
         .money-text { font-size: 2.2rem; font-weight: 900; color: #000; letter-spacing: -1.5px; }
-        .location-text { color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: flex; align-items: center; gap: 6px; letter-spacing: 1.5px; }
+        .location-text { color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: flex; align-items: center; gap: 6px; letter-spacing: 2px; }
         .job-card { border: 1px solid #f1f5f9; border-radius: 2.5rem; transition: 0.4s ease; background: #fff; }
         .job-card:hover { transform: translateY(-10px); box-shadow: 0 30px 50px rgba(0,0,0,0.06); border-color: #2563eb; }
         
         /* LED Search Button Animation */
         @keyframes ledRotate {
-            0% { border-color: #2563eb; box-shadow: 0 0 5px #2563eb; }
-            50% { border-color: #60a5fa; box-shadow: 0 0 20px #60a5fa; }
-            100% { border-color: #2563eb; box-shadow: 0 0 5px #2563eb; }
+            0%, 100% { border-color: #2563eb; box-shadow: 0 0 10px #2563eb; }
+            50% { border-color: #60a5fa; box-shadow: 0 0 25px #60a5fa; }
         }
-        .btn-ready { animation: ledRotate 1.5s infinite linear; border: 2px solid #2563eb !important; background: #1d4ed8 !important; color: white !important; cursor: pointer; }
+        .btn-ready { animation: ledRotate 1.5s infinite; border: 2px solid #2563eb !important; background: #1d4ed8 !important; color: white !important; cursor: pointer; }
         .btn-locked { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; border: 2px solid transparent; }
 
         .search-terminal { border: 2px solid #e2e8f0; }
         .input-field { width: 100%; padding: 1.25rem; background: #f8fafc; border-radius: 1.25rem; border: 2px solid transparent; font-weight: 600; outline: none; transition: 0.3s; }
         .input-field:focus { border-color: #2563eb; background: #fff; }
+        .hidden-box { display: none; }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
     <nav class="py-6 px-10 flex justify-between items-center bg-white sticky top-0 z-50 border-b border-slate-50">
         <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('visitor')">
             <i class="fas fa-suitcase text-blue-700 text-2xl"></i>
             <h1 class="text-2xl font-black tracking-tighter uppercase">JOBZZY</h1>
         </div>
-        
         <div id="nav-auth" class="flex items-center gap-6">
             <button onclick="showPage('login')" class="text-xs font-black uppercase tracking-widest text-slate-400">Login</button>
             <button onclick="showPage('signup')" class="bg-blue-700 text-white px-8 py-3 rounded-full font-black text-xs uppercase shadow-lg">Join Hub</button>
         </div>
-
         <div id="nav-user" class="hidden flex items-center gap-4">
             <div class="w-10 h-10 rounded-full border-2 border-blue-700 flex items-center justify-center bg-blue-50">
                 <i class="fas fa-user-tie text-blue-700"></i>
@@ -56,25 +54,63 @@
 
     <main id="visitor-page" class="page-section page-active">
         <header class="pt-24 pb-12 px-6 text-center bg-slate-50">
-            <h2 class="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter">The World is Hiring.<br><span class="text-blue-700">Stop Waiting.</span></h2>
-            <p class="text-xl font-bold text-slate-600 max-w-2xl mx-auto italic">Bridging the gap between Kenyan talent and global wealth.</p>
+            <h2 class="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter leading-[0.9]">THE WORLD IS HIRING.<br><span class="text-blue-700">STOP WAITING.</span></h2>
+            <p class="text-xl md:text-2xl font-bold text-slate-600 max-w-2xl mx-auto">Your location shouldn't limit your income. We bridge the gap between global talent and elite international careers.</p>
         </header>
 
-        <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div class="job-card p-10">
-                <div class="location-text mb-4"><i class="fas fa-map-marker-alt text-red-500"></i> Berlin, Germany</div>
-                <div class="money-text">€ 5,800.00</div>
-                <button onclick="showPage('signup')" class="w-full mt-8 py-4 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
+        <section class="max-w-6xl mx-auto -mt-10 px-6 mb-24">
+            <div class="search-terminal bg-white p-8 md:p-12 rounded-[3.5rem] shadow-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">1. Continent</label>
+                        <select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer"><option>Africa Region</option><option>Asia Region</option><option>European Union</option><option>The Americas</option></select>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">2. Qualification</label>
+                        <select id="v-qual" onchange="const b = document.getElementById('v-exp'); b.style.display = (this.value === 'e') ? 'flex' : 'none';" class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer">
+                            <option value="n">High School Certificate</option><option value="e">Diploma</option><option value="e">Bachelor's Degree</option><option value="e">Master's Degree</option>
+                        </select>
+                    </div>
+                    <div id="v-exp" class="hidden-box flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-blue-600 ml-2 italic">3. Expertise</label>
+                        <input type="text" placeholder="Law, Medicine..." class="w-full p-5 bg-blue-50 rounded-2xl font-bold text-sm outline-none border-2 border-blue-100">
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">4. Mode</label>
+                        <select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer"><option>Remote</option><option>On-Site</option></select>
+                    </div>
+                </div>
+                <button onclick="showPage('signup')" class="w-full mt-10 bg-blue-700 text-white py-6 rounded-[2rem] font-black uppercase text-sm shadow-xl">Search Global Opportunities</button>
             </div>
-            <div class="job-card p-10 border-blue-100 border-2">
-                <div class="location-text mb-4"><i class="fas fa-map-marker-alt text-red-500"></i> London, UK</div>
-                <div class="money-text">£ 4,500.00</div>
-                <button onclick="showPage('signup')" class="w-full mt-8 py-4 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
-            </div>
-            <div class="job-card p-10">
-                <div class="location-text mb-4"><i class="fas fa-map-marker-alt text-red-500"></i> California, USA</div>
-                <div class="money-text">$ 8,200.00</div>
-                <button onclick="showPage('signup')" class="w-full mt-8 py-4 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-6 pb-32">
+            <h3 class="text-[10px] font-black uppercase tracking-[0.5em] mb-16 text-slate-300 text-center">Live Market Previews</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                <div class="job-card p-10 flex flex-col">
+                    <div class="flex justify-between items-center mb-8"><i class="fas fa-network-wired text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-slate-100 px-3 py-1 rounded-full uppercase">Relocation</span></div>
+                    <h4 class="text-2xl font-black uppercase mb-3">Infrastructure Architect</h4>
+                    <div class="money-text mb-2">€ 5,800.00</div>
+                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> Berlin, Germany</div>
+                    <p class="text-sm text-slate-500 italic mb-10">European data centers are currently expanding at a rapid pace and lack the technical oversight to manage physical hardware scaling. This role is vital to ensuring 99.9% uptime for global cloud services.</p>
+                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
+                </div>
+                <div class="job-card p-10 flex flex-col">
+                    <div class="flex justify-between items-center mb-8"><i class="fas fa-balance-scale text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Remote</span></div>
+                    <h4 class="text-2xl font-black uppercase mb-3">Corporate Legal Liaison</h4>
+                    <div class="money-text mb-2">£ 4,500.00</div>
+                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> London, UK</div>
+                    <p class="text-sm text-slate-500 italic mb-10">International firms require remote legal analysts to manage contract compliance across different time zones to avoid litigation delays.</p>
+                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
+                </div>
+                <div class="job-card p-10 flex flex-col border-blue-100 border-2">
+                    <div class="flex justify-between items-center mb-8"><i class="fas fa-user-md text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-slate-100 px-3 py-1 rounded-full uppercase">On-Site</span></div>
+                    <h4 class="text-2xl font-black uppercase mb-3">Surgical Consultant</h4>
+                    <div class="money-text mb-2">$ 8,200.00</div>
+                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> California, USA</div>
+                    <p class="text-sm text-slate-500 italic mb-10">Medical facilities require expert diagnostic managers to oversee surgical throughput. High priority for qualified medical practitioners.</p>
+                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
+                </div>
             </div>
         </section>
     </main>
@@ -104,111 +140,57 @@
         </div>
     </main>
 
-    <main id="dashboard-page" class="page-section py-16 px-6 bg-white">
+    <main id="dashboard-page" class="page-section py-16 px-6 bg-white min-h-screen">
         <div class="max-w-6xl mx-auto">
-            <div class="mb-12">
-                <h3 class="text-3xl font-black uppercase">Search Terminal</h3>
-                <p class="text-slate-400 font-bold">Fill all parameters to ignite the search engine.</p>
-            </div>
-
-            <div class="search-terminal p-10 rounded-[3rem] shadow-xl bg-white grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="mb-12"><h3 class="text-4xl font-black uppercase">Search Terminal</h3><p class="text-slate-400 font-bold">Configure your global pathway.</p></div>
+            <div class="search-terminal p-12 rounded-[3.5rem] shadow-xl bg-white grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="flex flex-col gap-3">
-                    <label class="text-[10px] font-black uppercase text-slate-400 italic">1. Select Continent</label>
-                    <select id="continent-select" onchange="updateCountries(); checkReady();" class="input-field">
-                        <option value="">Choose Continent...</option>
-                        <option value="Africa">Africa</option>
-                        <option value="Asia">Asia</option>
-                        <option value="Europe">Europe</option>
-                        <option value="Americas">Americas</option>
-                    </select>
+                    <label class="text-[10px] font-black uppercase text-slate-400 italic">1. Continent</label>
+                    <select id="cont" onchange="updCountries(); chk();" class="input-field"><option value="">Choose...</option><option value="Af">Africa</option><option value="As">Asia</option><option value="Eu">Europe</option><option value="Am">Americas</option></select>
                 </div>
-
-                <div id="country-wrapper" class="hidden flex flex-col gap-3">
-                    <label class="text-[10px] font-black uppercase text-blue-600 italic">2. Specific Country/State</label>
-                    <select id="country-select" onchange="checkReady()" class="input-field"></select>
+                <div id="c-wrap" class="hidden-box flex flex-col gap-3">
+                    <label class="text-[10px] font-black uppercase text-blue-600 italic">2. Country/State</label>
+                    <select id="c-sel" onchange="chk()" class="input-field"></select>
                 </div>
-
                 <div class="flex flex-col gap-3">
                     <label class="text-[10px] font-black uppercase text-slate-400 italic">3. Qualification</label>
-                    <select id="dash-qual" onchange="toggleDashExpertise(); checkReady();" class="input-field">
-                        <option value="">Select Level...</option>
-                        <option value="high">High School Certificate</option>
-                        <option value="exp">Diploma</option>
-                        <option value="exp">Bachelor's Degree</option>
-                        <option value="exp">Master's Degree / PhD</option>
-                    </select>
+                    <select id="d-q" onchange="const e = document.getElementById('d-e-w'); e.style.display = (this.value === 'exp') ? 'flex' : 'none'; chk();" class="input-field"><option value="">Level...</option><option value="h">High School</option><option value="exp">Diploma</option><option value="exp">Bachelor's</option><option value="exp">Master's</option></select>
                 </div>
-
-                <div id="dash-expertise-wrapper" class="hidden flex flex-col gap-3">
+                <div id="d-e-w" class="hidden-box flex flex-col gap-3">
                     <label class="text-[10px] font-black uppercase text-blue-600 italic">4. Expertise</label>
-                    <input type="text" id="dash-exp-input" oninput="checkReady()" placeholder="e.g. Nursing, Law, Coding" class="input-field">
+                    <input type="text" id="d-i" oninput="chk()" placeholder="Medicine, Law..." class="input-field">
                 </div>
-
-                <div class="md:col-span-2">
-                    <button id="search-btn" class="w-full py-6 rounded-2xl font-black uppercase text-sm tracking-widest btn-locked transition-all">
-                        Search Global Hub
-                    </button>
-                </div>
+                <div class="md:col-span-2"><button id="s-b" class="w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked">Search Global Hub</button></div>
             </div>
         </div>
     </main>
 
+    <footer class="bg-slate-900 py-20 px-6 text-center text-white">
+        <h4 class="text-2xl font-black uppercase mb-4 tracking-widest">JOBZZY</h4>
+        <div class="text-[10px] font-bold text-slate-700 uppercase tracking-widest">Developed by Macharia Kenneth &copy; 2026</div>
+    </footer>
+
     <script>
-        // Supabase Init
-        const _supabase = supabase.createClient('https://hnfhmlghnqlxgdecoetz.supabase.co', 'sb_publishable_-jtctinLpsT0jdHwxPDmVw_Yb2AZTOo');
-
-        const countries = {
-            Africa: ["Kenya", "Rwanda", "Mauritius", "Seychelles", "South Africa", "Botswana", "Namibia", "Ghana", "Tanzania", "Egypt", "Morocco", "Tunisia", "Senegal", "Uganda", "Ethiopia", "Zambia", "Ivory Coast", "Algeria", "Gabon", "Cape Verde"],
-            Asia: ["Japan", "Singapore", "South Korea", "UAE", "Qatar", "China", "India", "Malaysia", "Thailand", "Vietnam", "Saudi Arabia", "Israel"],
-            Americas: ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "Canada", "Brazil", "Mexico"],
-            Europe: ["Germany", "United Kingdom", "France", "Switzerland", "Norway", "Sweden", "Netherlands", "Ireland", "Italy", "Spain", "Poland", "Austria", "Belgium", "Denmark", "Finland"]
+        const c_data = {
+            Af: ["Kenya", "Rwanda", "Mauritius", "Seychelles", "South Africa", "Botswana", "Namibia", "Ghana", "Tanzania", "Egypt", "Morocco", "Tunisia", "Senegal", "Uganda", "Ethiopia", "Zambia", "Ivory Coast", "Algeria", "Gabon", "Cape Verde"],
+            As: ["Japan", "Singapore", "South Korea", "UAE", "Qatar", "China", "India"],
+            Eu: ["Germany", "UK", "France", "Switzerland", "Norway"],
+            Am: ["California", "Texas", "New York", "Florida", "Canada", "Brazil"]
         };
-
-        function showPage(id) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active'));
-            document.getElementById(id + '-page').classList.add('page-active');
-            window.scrollTo(0,0);
+        function showPage(id) { document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active')); document.getElementById(id + '-page').classList.add('page-active'); window.scrollTo(0,0); }
+        function toggleNav() { document.getElementById('nav-auth').classList.add('hidden'); document.getElementById('nav-user').classList.remove('hidden'); }
+        function updCountries() {
+            const v = document.getElementById('cont').value;
+            const w = document.getElementById('c-wrap');
+            const s = document.getElementById('c-sel');
+            if(v) { w.style.display='flex'; s.innerHTML='<option value="">Country...</option>'+c_data[v].map(c=>`<option value="${c}">${c}</option>`).join(''); } 
+            else { w.style.display='none'; }
         }
-
-        function toggleNav() {
-            document.getElementById('nav-auth').classList.add('hidden');
-            document.getElementById('nav-user').classList.remove('hidden');
-        }
-
-        function updateCountries() {
-            const cont = document.getElementById('continent-select').value;
-            const wrap = document.getElementById('country-wrapper');
-            const sel = document.getElementById('country-select');
-            if(cont) {
-                wrap.classList.remove('hidden');
-                sel.innerHTML = '<option value="">Select Country...</option>' + countries[cont].map(c => `<option value="${c}">${c}</option>`).join('');
-            } else { wrap.classList.add('hidden'); }
-        }
-
-        function toggleDashExpertise() {
-            const q = document.getElementById('dash-qual').value;
-            document.getElementById('dash-expertise-wrapper').classList.toggle('hidden', q !== 'exp');
-        }
-
-        function checkReady() {
-            const cont = document.getElementById('continent-select').value;
-            const country = document.getElementById('country-select').value;
-            const qual = document.getElementById('dash-qual').value;
-            const exp = document.getElementById('dash-exp-input').value;
-            const btn = document.getElementById('search-btn');
-
-            let isReady = cont && country && qual;
-            if (qual === 'exp' && !exp) isReady = false;
-
-            if(isReady) {
-                btn.classList.remove('btn-locked');
-                btn.classList.add('btn-ready');
-                btn.innerHTML = 'Search Global Hub <i class="fas fa-bolt ml-2"></i>';
-            } else {
-                btn.classList.add('btn-locked');
-                btn.classList.remove('btn-ready');
-                btn.innerHTML = 'Search Global Hub';
-            }
+        function chk() {
+            const r = document.getElementById('cont').value && document.getElementById('c-sel').value && document.getElementById('d-q').value;
+            const b = document.getElementById('s-b');
+            if(r) { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-ready'; b.innerHTML='Search Global Hub <i class="fas fa-bolt ml-2"></i>'; }
+            else { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked'; b.innerHTML='Search Global Hub'; }
         }
     </script>
 </body>
