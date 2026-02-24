@@ -14,13 +14,11 @@
         .page-section { display: none; }
         .page-active { display: block; }
         
-        /* Visitor & Dashboard UI */
         .money-text { font-size: 2.2rem; font-weight: 900; color: #000; letter-spacing: -1.5px; }
         .location-text { color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: flex; align-items: center; gap: 6px; letter-spacing: 2px; }
         .job-card { border: 1px solid #f1f5f9; border-radius: 2.5rem; transition: 0.4s ease; background: #fff; height: 100%; display: flex; flex-direction: column; }
         .job-card:hover { transform: translateY(-10px); box-shadow: 0 30px 50px rgba(0,0,0,0.06); border-color: #2563eb; }
         
-        /* The Post-Payment Glow */
         .btn-apply-glow {
             background: #e0f2fe !important; 
             color: #0369a1 !important;
@@ -147,7 +145,10 @@
 
     <main id="dashboard-page" class="page-section py-16 px-6 bg-white min-h-screen">
         <div class="max-w-7xl mx-auto">
-            <h3 class="text-4xl font-black uppercase mb-12">Search Terminal</h3>
+            <div class="mb-12">
+                <h3 class="text-4xl font-black uppercase tracking-tighter">Global Access Hub</h3>
+                <p class="text-slate-400 font-bold uppercase text-xs tracking-widest mt-2">Authenticated Member Terminal</p>
+            </div>
             
             <div class="p-10 rounded-[3.5rem] shadow-2xl border-2 border-slate-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
                 <div class="flex flex-col gap-2">
@@ -169,7 +170,13 @@
                 <div class="lg:col-span-4"><button id="s-b" onclick="performSearch()" class="w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Global Search</button></div>
             </div>
 
-            <div id="job-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+            <div class="mb-10 flex items-center justify-between">
+                <h4 id="feed-title" class="text-xs font-black uppercase tracking-widest text-slate-400">Premium Opportunities Available Now</h4>
+                <div class="h-[1px] flex-grow mx-8 bg-slate-100"></div>
+            </div>
+
+            <div id="job-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                </div>
         </div>
     </main>
 
@@ -186,36 +193,60 @@
             Am: ["California", "Texas", "New York", "Florida", "Canada"]
         };
 
-        const templates = [
-            { t: "Senior Clinical Manager", p: "$ 7,500", i: "fa-user-md", l: "https://www.mayoclinic.org/jobs" },
-            { t: "Remote System Engineer", p: "€ 6,200", i: "fa-server", l: "https://www.siemens.com/global/en/company/jobs.html" },
-            { t: "Corporate Legal Counsel", p: "£ 5,800", i: "fa-gavel", l: "https://www.cliffordchance.com/careers.html" },
-            { t: "Global Logistics Director", p: "$ 5,900", i: "fa-truck-moving", l: "https://www.dhl.com/global-en/home/careers.html" }
+        const globalTemplates = [
+            { t: "Senior Clinical Manager", p: "$ 7,500", i: "fa-user-md", l: "https://www.mayoclinic.org/jobs", loc: "Mayo Clinic, USA" },
+            { t: "Remote System Engineer", p: "€ 6,200", i: "fa-server", l: "https://www.siemens.com/global/en/company/jobs.html", loc: "Siemens, Germany" },
+            { t: "Corporate Legal Counsel", p: "£ 5,800", i: "fa-gavel", l: "https://www.cliffordchance.com/careers.html", loc: "London, UK" },
+            { t: "FinTech Product Lead", p: "$ 6,400", i: "fa-credit-card", l: "https://www.stripe.com/jobs", loc: "Singapore Hub" },
+            { t: "Health Data Analyst", p: "$ 5,200", i: "fa-heartbeat", l: "https://www.who.int/careers", loc: "Geneva, Switzerland" }
         ];
 
         let hasPaid = false;
 
-        function performSearch() {
-            const country = document.getElementById('c-sel').value;
+        // "WINDOW SHOPPING" GENERATOR (20 JOBS)
+        function loadWindowShopping() {
             const feed = document.getElementById('job-feed');
             feed.innerHTML = '';
-            for (let i = 1; i <= 40; i++) {
-                const temp = templates[i % 4];
-                feed.innerHTML += `
-                    <div class="job-card p-10">
-                        <div class="flex justify-between items-center mb-8"><i class="fas ${temp.i} text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Verified Spot</span></div>
-                        <h4 class="text-2xl font-black uppercase mb-3 leading-tight">${temp.t} #${i}</h4>
-                        <div class="money-text mb-2">${temp.p}</div>
-                        <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${country}</div>
-                        <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Verified high-priority opening in ${country}. Direct application portal available upon professional clearance.</p>
-                        <button onclick="handleApply('${temp.l}')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest ${hasPaid ? 'btn-apply-glow' : ''}">
-                            ${hasPaid ? 'Apply Now' : 'Unlock Application'}
-                        </button>
-                    </div>`;
+            for (let i = 1; i <= 20; i++) {
+                const temp = globalTemplates[i % 5];
+                feed.innerHTML += createJobCard(temp.t, temp.p, temp.i, temp.loc, temp.l, i);
             }
         }
 
+        // SEARCH FUNCTION (40 JOBS FOR COUNTRY)
+        function performSearch() {
+            const country = document.getElementById('c-sel').value;
+            const feed = document.getElementById('job-feed');
+            document.getElementById('feed-title').innerText = `40 New Opportunities found in ${country}`;
+            feed.innerHTML = '';
+            for (let i = 1; i <= 40; i++) {
+                const temp = globalTemplates[i % 5];
+                feed.innerHTML += createJobCard(temp.t, temp.p, temp.i, country, temp.l, i);
+            }
+        }
+
+        function createJobCard(title, pay, icon, location, link, id) {
+            return `
+                <div class="job-card p-10">
+                    <div class="flex justify-between items-center mb-8"><i class="fas ${icon} text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Verified Spot</span></div>
+                    <h4 class="text-2xl font-black uppercase mb-3 leading-tight">${title}</h4>
+                    <div class="money-text mb-2">${pay}</div>
+                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${location}</div>
+                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">High-priority role requiring immediate intake. Secure global clearance to access direct application portal.</p>
+                    <button onclick="handleApply('${link}')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest ${hasPaid ? 'btn-apply-glow' : ''}">
+                        ${hasPaid ? 'Apply Now' : 'Unlock Application'}
+                    </button>
+                </div>`;
+        }
+
         function handleApply(link) { if(!hasPaid) { alert("GLOBAL VERIFICATION REQUIRED: Complete clearance payment to unlock links."); } else { window.open(link, '_blank'); } }
+        function showPage(id) { 
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active')); 
+            document.getElementById(id + '-page').classList.add('page-active'); 
+            if(id === 'dashboard') loadWindowShopping(); // TRIGGER WINDOW SHOPPING ON LOGIN
+            window.scrollTo(0,0); 
+        }
+        
         function updCountries() {
             const v = document.getElementById('cont').value;
             const w = document.getElementById('c-wrap');
@@ -229,7 +260,6 @@
             if(r) { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-ready'; b.innerHTML='Initiate Global Search <i class="fas fa-bolt ml-2"></i>'; }
             else { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked'; b.innerHTML='Initiate Global Search'; }
         }
-        function showPage(id) { document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active')); document.getElementById(id + '-page').classList.add('page-active'); window.scrollTo(0,0); }
         function toggleNav() { document.getElementById('nav-auth').classList.add('hidden'); document.getElementById('nav-user').classList.remove('hidden'); }
     </script>
 </body>
