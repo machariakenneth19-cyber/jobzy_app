@@ -158,7 +158,7 @@
                 </div>
                 <div id="n-wrap" class="flex flex-col gap-2">
                     <label class="text-[9px] font-black uppercase text-blue-600 ml-2 italic">4. Niche</label>
-                    <input type="text" id="d-i" oninput="chk()" placeholder="Medicine, Law, IT..." class="input-field">
+                    <input type="text" id="d-i" oninput="chk()" placeholder="Medicine, Law..." class="input-field">
                 </div>
                 <div class="lg:col-span-4"><button id="s-b" onclick="performSearch()" class="w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Global Search</button></div>
             </div>
@@ -175,10 +175,24 @@
             Am: ["California", "Texas", "New York", "Florida", "Ontario, Canada"]
         };
 
-        // HUGE LIBRARIES TO PREVENT REPETITION
         const hsTitles = ["Airport Ground Staff", "Cruise Deck Assistant", "Warehouse Logistics Lead", "International Courier", "Hospitality Liaison", "Security Fleet Officer", "Retail Operations Lead", "Delivery Systems Manager", "Customs Agent Assistant", "Event Setup Coordinator", "Port Terminal Assistant", "Global Mail Dispatcher", "Inventory Specialist", "Property Caretaker", "Customer Support Rep", "Brand Ambassador", "Office Admin Assistant", "Supply Route Driver", "Technical Field Hand", "Logistics Support"];
         const profTitles = ["Senior Systems Architect", "Clinical Trial Manager", "Corporate Legal Counsel", "Biomedical Engineer", "Full Stack Developer", "Financial Risk Analyst", "Public Health Director", "AI Product Owner", "Cyber Defense Lead", "Infrastructure Consultant", "Legal Compliance Officer", "Surgical Operations Manager", "Data Science Principal", "Network Security Lead", "Global HR Strategist", "Renewable Energy Engineer", "International Auditor", "Marketing Analytics Lead", "Supply Chain Director", "Project Lead Engineer"];
         const companies = ["Vanguard Corp", "Apex Global", "Summit International", "Nexus Systems", "Legacy Group", "Global Horizon", "Bridge Partners", "Horizon Tech", "Emerald Logistics", "Titan Solutions", "Prism Industries", "United Global", "Frontier Hub", "Capital Group", "Prime Operations"];
+
+        function loadWindowShopping() {
+            const feed = document.getElementById('job-feed');
+            feed.innerHTML = '';
+            const allCountries = ["USA", "Germany", "Japan", "South Africa", "UAE", "UK", "Canada", "Singapore"];
+            
+            for (let i = 1; i <= 20; i++) {
+                const titleIdx = i % profTitles.length;
+                const compIdx = i % companies.length;
+                const country = allCountries[i % allCountries.length];
+                const pay = `$ ${7200 + (i * 30)}`;
+                
+                feed.innerHTML += renderCard(profTitles[titleIdx], companies[compIdx], pay, country, i);
+            }
+        }
 
         function performSearch() {
             const country = document.getElementById('c-sel').value;
@@ -187,38 +201,33 @@
             feed.innerHTML = '';
 
             let titles = (qual === 'h') ? hsTitles : profTitles;
-            let icon = (qual === 'h') ? 'fa-briefcase' : 'fa-user-tie';
-
             for (let i = 1; i <= 40; i++) {
-                // Logic: Uses the index 'i' to pull unique titles. No repeats for the first 40.
                 const titleIdx = (i - 1) % titles.length;
-                const compIdx = (i * 7) % companies.length;
+                const compIdx = (i * 3) % companies.length;
                 const pay = (qual === 'h') ? `$ ${2800 + (i * 10)}` : `$ ${7200 + (i * 50)}`;
-
-                feed.innerHTML += `
-                    <div class="job-card p-10">
-                        <div class="flex justify-between items-center mb-8">
-                            <i class="fas ${icon} text-blue-700 text-2xl"></i>
-                            <span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">ID: JB-${2000+i}</span>
-                        </div>
-                        <h4 class="text-2xl font-black uppercase mb-1 leading-tight">${titles[titleIdx]}</h4>
-                        <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">at ${companies[compIdx]}</div>
-                        <div class="money-text mb-2">${pay}</div>
-                        <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${country}</div>
-                        <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">
-                            This ${titles[titleIdx]} position at ${companies[compIdx]} requires immediate oversight for local operations in ${country}. 
-                            Candidates must demonstrate high performance and reliability to meet international standards. 
-                            Direct application link is available upon professional clearance and verification.
-                        </p>
-                        <button onclick="alert('CLEARANCE REQUIRED: Complete verification to unlock.')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest">Unlock Application</button>
-                    </div>`;
+                feed.innerHTML += renderCard(titles[titleIdx], companies[compIdx], pay, country, i);
             }
         }
 
-        // --- CORE NAV LOGIC (LOCKED) ---
+        function renderCard(title, company, pay, location, id) {
+            return `
+                <div class="job-card p-10">
+                    <div class="flex justify-between items-center mb-8">
+                        <i class="fas fa-briefcase text-blue-700 text-2xl"></i>
+                        <span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">REF: ${1000+id}</span>
+                    </div>
+                    <h4 class="text-2xl font-black uppercase mb-1 leading-tight">${title}</h4>
+                    <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">at ${company}</div>
+                    <div class="money-text mb-2">${pay}</div>
+                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${location}</div>
+                    <button onclick="alert('LOCKED: Complete clearance to view full job description and portal link.')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest">Unlock Application</button>
+                </div>`;
+        }
+
         function showPage(id) { 
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active')); 
             document.getElementById(id + '-page').classList.add('page-active'); 
+            if(id === 'dashboard') loadWindowShopping();
             window.scrollTo(0,0); 
         }
         function updCountries() {
