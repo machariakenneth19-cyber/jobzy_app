@@ -43,12 +43,10 @@
             <i class="fas fa-suitcase text-blue-700 text-2xl"></i>
             <h1 class="text-2xl font-black tracking-tighter uppercase">JOBZZY</h1>
         </div>
-        
         <div id="nav-auth" class="flex items-center gap-6">
             <button onclick="showPage('login')" class="text-xs font-black uppercase tracking-widest text-slate-400">Login</button>
             <button onclick="showPage('signup')" class="bg-blue-700 text-white px-8 py-3 rounded-full font-black text-xs uppercase shadow-lg">Join Hub</button>
         </div>
-
         <div id="nav-user" class="hidden flex items-center gap-4">
             <span id="tier-display" class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full uppercase">Free Tier</span>
             <div onclick="showPage('subscription')" class="w-10 h-10 rounded-full border-2 border-blue-700 flex items-center justify-center bg-blue-50 cursor-pointer">
@@ -82,7 +80,7 @@
                     <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Infrastructure Architect</h4>
                     <div class="money-text mb-2">€ 5,800.00</div>
                     <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> Berlin, Germany</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">European data centers are expanding rapidly. This role is vital to ensuring 99.9% uptime for global cloud services.</p>
+                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">European data centers are expanding rapidly. This role is vital for infrastructure scaling.</p>
                     <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
                 </div>
                 <div class="job-card p-10">
@@ -90,7 +88,7 @@
                     <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Corporate Legal Liaison</h4>
                     <div class="money-text mb-2">£ 4,500.00</div>
                     <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> London, UK</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">International firms require remote legal analysts to manage contract compliance across different time zones.</p>
+                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">International firms require remote legal analysts to manage contract compliance.</p>
                     <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
                 </div>
                 <div class="job-card p-10 border-blue-100 border-2">
@@ -98,14 +96,14 @@
                     <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Surgical Consultant</h4>
                     <div class="money-text mb-2">$ 8,200.00</div>
                     <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> California, USA</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Medical facilities require expert diagnostic managers to oversee surgical throughput. High priority role.</p>
+                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Medical facilities require expert diagnostic managers to oversee throughput.</p>
                     <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
                 </div>
             </div>
         </section>
     </main>
 
-    <main id="signup-page" class="page-section py-20 bg-slate-50 min-h-screen">
+    <main id="signup-page" class="page-section py-20 bg-slate-50">
         <div class="max-w-md mx-auto bg-white p-10 rounded-[3rem] shadow-2xl">
             <h3 class="text-3xl font-black uppercase mb-8 text-center">Join Hub</h3>
             <form onsubmit="handleAuth(event)" class="space-y-6">
@@ -117,7 +115,7 @@
         </div>
     </main>
 
-    <main id="login-page" class="page-section py-20 bg-slate-50 min-h-screen">
+    <main id="login-page" class="page-section py-20 bg-slate-50">
         <div class="max-w-md mx-auto bg-white p-10 rounded-[3rem] shadow-2xl">
             <h3 class="text-3xl font-black uppercase mb-8 text-center">Login</h3>
             <form onsubmit="handleAuth(event)" class="space-y-6">
@@ -133,9 +131,9 @@
             <div class="p-10 rounded-[3.5rem] shadow-2xl border-2 border-slate-100 grid grid-cols-1 md:grid-cols-4 gap-6 mb-24">
                 <select id="cont" onchange="updCountries(); chk();" class="input-field"><option value="">Continent...</option><option value="Af">Africa</option><option value="As">Asia</option><option value="Eu">Europe</option></select>
                 <select id="c-sel" onchange="chk()" class="input-field hidden-box"></select>
-                <select id="d-q" onchange="chk()" class="input-field"><option value="">Degree...</option><option value="h">High School</option><option value="d">Professional</option></select>
+                <select id="d-q" onchange="chk()" class="input-field"><option value="">Qualification...</option><option value="h">High School</option><option value="d">Professional</option></select>
                 <input type="text" id="d-i" oninput="chk()" placeholder="Niche..." class="input-field">
-                <button id="s-b" onclick="performSearch()" class="md:col-span-4 py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Search</button>
+                <button id="s-b" onclick="performSearch()" class="md:col-span-4 py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Global Search</button>
             </div>
             <div id="job-feed" class="grid grid-cols-1 md:grid-cols-3 gap-10"></div>
         </div>
@@ -143,45 +141,33 @@
 
     <main id="subscription-page" class="page-section py-16 px-6 bg-slate-50">
         <div class="max-w-7xl mx-auto text-center mb-12">
-            <h2 class="text-4xl font-black uppercase">Subscription Plans</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tight">Upgrade Your Access</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            <div class="plan-card p-8 flex flex-col">
-                <h4 class="font-black uppercase mb-4">Free</h4>
-                <div class="check-item"><i class="fas fa-check text-green-500"></i> View Only</div>
-                <div class="check-item"><i class="fas fa-times text-slate-300"></i> No Applications</div>
-                <button class="mt-auto w-full py-4 bg-slate-100 rounded-full font-black text-[10px] uppercase">Active</button>
-            </div>
-            <div class="plan-card p-8 flex flex-col">
-                <h4 class="font-black uppercase mb-4">$5 <span class="text-xs">/mo</span></h4>
-                <div class="check-item"><i class="fas fa-check text-green-500"></i> Africa Jobs</div>
-                <div class="check-item"><i class="fas fa-check text-green-500"></i> 5 Apps/Day</div>
-                <button onclick="payWithPaystack(500)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button>
-            </div>
-            <div class="plan-card p-8 border-blue-500 flex flex-col">
-                <h4 class="font-black uppercase mb-4">$10 <span class="text-xs">/mo</span></h4>
-                <div class="check-item"><i class="fas fa-check text-green-500"></i> Africa & Asia</div>
-                <div class="check-item"><i class="fas fa-check text-green-500"></i> 30 Apps/Day</div>
-                <button onclick="payWithPaystack(1000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button>
-            </div>
-            <div class="plan-card p-8 flex flex-col">
-                <h4 class="font-black uppercase mb-4">$30 <span class="text-xs">/mo</span></h4>
-                <div class="check-item"><i class="fas fa-check text-green-500"></i> Global Access</div>
-                <div class="check-item"><i class="fas fa-check text-green-500"></i> Unlimited Apps</div>
-                <button onclick="payWithPaystack(3000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button>
-            </div>
+            <div class="plan-card p-8 flex flex-col"><h4 class="font-black uppercase mb-4">Free</h4><div class="check-item"><i class="fas fa-check text-green-500"></i> View All Jobs</div><div class="check-item"><i class="fas fa-times text-slate-300"></i> No Applications</div><button class="mt-auto w-full py-4 bg-slate-100 rounded-full font-black text-[10px] uppercase">Active</button></div>
+            <div class="plan-card p-8 flex flex-col"><h4 class="font-black uppercase mb-4">$5 <span class="text-xs">/mo</span></h4><div class="check-item"><i class="fas fa-check text-green-500"></i> Africa Region</div><div class="check-item"><i class="fas fa-check text-green-500"></i> 5 Apps/Day</div><button onclick="payWithPaystack(500)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button></div>
+            <div class="plan-card p-8 border-blue-500 flex flex-col"><h4 class="font-black uppercase mb-4">$10 <span class="text-xs">/mo</span></h4><div class="check-item"><i class="fas fa-check text-green-500"></i> Africa & Asia</div><div class="check-item"><i class="fas fa-check text-green-500"></i> 30 Apps/Day</div><button onclick="payWithPaystack(1000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button></div>
+            <div class="plan-card p-8 flex flex-col"><h4 class="font-black uppercase mb-4">$30 <span class="text-xs">/mo</span></h4><div class="check-item"><i class="fas fa-check text-green-500"></i> Global Access</div><div class="check-item"><i class="fas fa-check text-green-500"></i> Unlimited Apps</div><button onclick="payWithPaystack(3000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button></div>
         </div>
     </main>
 
     <script>
         const PUBLIC_KEY = 'pk_live_4689394fbf57d1426973e2213af54e4b2ce49011';
-        const c_data = { Af: ["Kenya", "South Africa", "Nigeria"], As: ["Japan", "UAE", "Singapore"], Eu: ["UK", "Germany"] };
-        const titles = ["Clinical Manager", "Systems Architect", "Legal Counsel", "Aviation Lead", "Data Scientist"];
+        const c_data = { Af: ["Kenya", "South Africa", "Nigeria"], As: ["Japan", "UAE", "Singapore"], Eu: ["UK", "Germany", "France"] };
+        const profTitles = ["Systems Architect", "Medical Liaison", "Legal Counsel", "Aviation Manager", "Data Science Lead"];
+        const hsTitles = ["Airport Staff", "Logistics Hand", "Courier Hub Lead", "Security Officer", "Front Desk Assistant"];
+
+        function getCurrency(country) {
+            if (country === "UK") return "£";
+            if (["Germany", "France"].includes(country)) return "€";
+            return "$";
+        }
 
         function showPage(id) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active'));
             document.getElementById(id + '-page').classList.add('page-active');
             if(id === 'dashboard') loadWindowShopping();
+            window.scrollTo(0,0);
         }
 
         function handleAuth(e) { e.preventDefault(); document.getElementById('nav-auth').classList.add('hidden'); document.getElementById('nav-user').classList.remove('hidden'); showPage('dashboard'); }
@@ -189,33 +175,43 @@
         function updCountries() {
             const v = document.getElementById('cont').value;
             const s = document.getElementById('c-sel');
-            if(v) { s.classList.remove('hidden-box'); s.innerHTML = c_data[v].map(c => `<option>${c}</option>`).join(''); }
+            if(v) { s.classList.remove('hidden-box'); s.innerHTML = '<option value="">Select Country...</option>' + c_data[v].map(c => `<option value="${c}">${c}</option>`).join(''); }
         }
 
         function chk() {
-            const ready = document.getElementById('cont').value && document.getElementById('d-q').value;
+            const ready = document.getElementById('cont').value && document.getElementById('c-sel').value && document.getElementById('d-q').value;
             document.getElementById('s-b').className = ready ? "md:col-span-4 py-6 rounded-2xl font-black uppercase text-sm btn-ready" : "md:col-span-4 py-6 rounded-2xl font-black uppercase text-sm btn-locked";
         }
 
         function loadWindowShopping() {
             const feed = document.getElementById('job-feed');
             feed.innerHTML = '';
-            for (let i = 0; i < 12; i++) feed.innerHTML += renderCard(titles[i % 5], "$ 8,000", "Global");
+            const worlds = ["USA", "Germany", "Japan", "Kenya", "UK", "UAE"];
+            for (let i = 0; i < 12; i++) {
+                const country = worlds[i % worlds.length];
+                const symbol = getCurrency(country);
+                feed.innerHTML += renderCard(profTitles[i % 5], symbol + " " + (7000 + (i * 100)), country);
+            }
         }
 
         function performSearch() {
             const feed = document.getElementById('job-feed');
             const country = document.getElementById('c-sel').value;
-            const symbol = country === "UK" ? "£" : "$";
+            const qual = document.getElementById('d-q').value;
+            const symbol = getCurrency(country);
+            const list = (qual === 'h') ? hsTitles : profTitles;
             feed.innerHTML = '';
-            for (let i = 0; i < 15; i++) feed.innerHTML += renderCard(titles[i % 5], symbol + " 7,500", country);
+            for (let i = 0; i < 15; i++) {
+                const pay = (qual === 'h') ? 2500 + (i * 50) : 7500 + (i * 120);
+                feed.innerHTML += renderCard(list[i % 5], symbol + " " + pay, country);
+            }
         }
 
         function renderCard(t, p, l) {
             return `<div class="job-card p-10">
                 <h4 class="text-xl font-black uppercase mb-4">${t}</h4>
                 <div class="money-text mb-2">${p}</div>
-                <div class="location-text mb-6">${l}</div>
+                <div class="location-text mb-6"><i class="fas fa-map-marker-alt text-red-500"></i> ${l}</div>
                 <p class="text-xs text-slate-400 italic mb-8">High-priority international role. Portals locked for Free Tier.</p>
                 <button onclick="showPage('subscription')" class="mt-auto w-full py-4 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Unlock Application</button>
             </div>`;
@@ -225,7 +221,7 @@
             let handler = PaystackPop.setup({
                 key: PUBLIC_KEY, email: 'user@jobzzy.com', amount: amt * 100, currency: 'USD',
                 callback: (r) => alert('Success! Ref: ' + r.reference),
-                onClose: () => alert('Window Closed')
+                onClose: () => {}
             });
             handler.openIframe();
         }
