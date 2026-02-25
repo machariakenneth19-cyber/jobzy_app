@@ -3,59 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobzzy | Professional Subscription</title>
+    <title>Jobzzy | Global Professional Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f172a; }
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #0f172a; overflow-x: hidden; }
         .page-section { display: none; }
         .page-active { display: block; }
         
-        /* Glowing Subscription Cards */
-        .plan-card { 
-            border: 2px solid #f1f5f9; 
-            border-radius: 3rem; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            background: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .plan-card:hover { 
-            transform: scale(1.05); 
-            border-color: #2563eb; 
-            box-shadow: 0 30px 60px rgba(37, 99, 235, 0.1); 
-        }
-        .plan-popular { 
-            border-color: #2563eb; 
-            box-shadow: 0 0 30px rgba(37, 99, 235, 0.2); 
-        }
-
-        /* Glowing Button */
-        .btn-glow {
-            background: #2563eb;
-            color: white;
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
-            animation: pulse-blue 2s infinite;
-            border-radius: 9999px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(37, 99, 235, 0.8); }
-
-        @keyframes pulse-blue {
-            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(37, 99, 235, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
-        }
-
+        .money-text { font-size: 2.2rem; font-weight: 900; color: #000; letter-spacing: -1.5px; }
+        .location-text { color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: flex; align-items: center; gap: 6px; letter-spacing: 2px; }
+        
+        /* Job Card Styles */
+        .job-card { border: 1px solid #f1f5f9; border-radius: 2.5rem; transition: 0.4s ease; background: #fff; height: 100%; display: flex; flex-direction: column; }
+        .job-card:hover { transform: translateY(-10px); box-shadow: 0 30px 50px rgba(0,0,0,0.06); border-color: #2563eb; }
+        
+        /* Buttons & Inputs */
+        .btn-ready { animation: ledRotate 1.5s infinite; border: 2px solid #2563eb !important; background: #1d4ed8 !important; color: white !important; cursor: pointer; }
+        .btn-locked { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; border: 2px solid transparent; }
+        .btn-glow { background: #2563eb; color: white; animation: pulse-blue 2s infinite; border-radius: 9999px; font-weight: 900; text-transform: uppercase; transition: 0.3s; }
+        .input-field { width: 100%; padding: 1.25rem; background: #f8fafc; border-radius: 1.25rem; border: 2px solid transparent; font-weight: 600; outline: none; transition: 0.3s; }
+        .input-field:focus { border-color: #2563eb; background: #fff; }
+        
+        /* Subscription Cards */
+        .plan-card { border: 2px solid #f1f5f9; border-radius: 3rem; transition: 0.4s ease; background: white; }
+        .plan-card:hover { transform: scale(1.02); border-color: #2563eb; box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1); }
         .check-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; }
-        .check-yes { color: #10b981; }
-        .check-no { color: #94a3b8; text-decoration: line-through; }
+
+        @keyframes ledRotate { 0%, 100% { box-shadow: 0 0 10px #2563eb; } 50% { box-shadow: 0 0 25px #60a5fa; } }
+        @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
+        .hidden-box { display: none; }
     </style>
 </head>
 <body>
@@ -65,105 +45,161 @@
             <i class="fas fa-suitcase text-blue-700 text-2xl"></i>
             <h1 class="text-2xl font-black tracking-tighter uppercase">JOBZZY</h1>
         </div>
-        <div id="nav-user" class="flex items-center gap-4">
-            <span class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full uppercase">Free Tier</span>
-            <div onclick="showPage('profile')" class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center border-2 border-blue-700 cursor-pointer">
+        
+        <div id="nav-auth" class="flex items-center gap-6">
+            <button onclick="showPage('login')" class="text-xs font-black uppercase tracking-widest text-slate-400">Login</button>
+            <button onclick="showPage('signup')" class="bg-blue-700 text-white px-8 py-3 rounded-full font-black text-xs uppercase shadow-lg">Join Hub</button>
+        </div>
+
+        <div id="nav-user" class="hidden flex items-center gap-4">
+            <span id="tier-display" class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full uppercase">Free Tier</span>
+            <div onclick="showPage('subscription')" class="w-10 h-10 rounded-full border-2 border-blue-700 flex items-center justify-center bg-blue-50 cursor-pointer">
                 <i class="fas fa-user-tie text-blue-700"></i>
             </div>
         </div>
     </nav>
 
-    <main id="subscription-page" class="page-section page-active py-20 px-6">
-        <div class="max-w-7xl mx-auto text-center mb-16">
-            <h2 class="text-5xl font-black uppercase tracking-tighter mb-4">Choose Your <span class="text-blue-700">Global Access</span></h2>
-            <p class="font-bold text-slate-500">Stop browsing. Start applying to international markets today.</p>
+    <main id="visitor-page" class="page-section page-active">
+        <header class="pt-24 pb-12 px-6 text-center bg-slate-50">
+            <h2 class="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter leading-[0.9]">THE WORLD IS HIRING.<br><span class="text-blue-700">STOP WAITING.</span></h2>
+            <p class="text-xl md:text-2xl font-bold text-slate-600 max-w-2xl mx-auto">Your location shouldn't limit your income.</p>
+        </header>
+        <section class="max-w-6xl mx-auto -mt-10 px-6 mb-24">
+            <div class="bg-white p-12 rounded-[3.5rem] shadow-2xl border-2 border-slate-100">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="flex flex-col gap-2"><label class="text-[10px] font-black uppercase text-slate-400 italic">Continent</label><select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none"><option>Africa Region</option><option>Asia Region</option></select></div>
+                    <div class="flex flex-col gap-2"><label class="text-[10px] font-black uppercase text-slate-400 italic">Qualification</label><select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none"><option>Degree</option><option>High School</option></select></div>
+                    <div class="flex flex-col gap-2"><label class="text-[10px] font-black uppercase text-slate-400 italic">Expertise</label><input type="text" placeholder="e.g. Nursing" class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none"></div>
+                    <div class="flex flex-col gap-2"><label class="text-[10px] font-black uppercase text-slate-400 italic">Mode</label><select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none"><option>Remote</option><option>On-Site</option></select></div>
+                </div>
+                <button onclick="showPage('signup')" class="w-full mt-10 bg-blue-700 text-white py-6 rounded-[2rem] font-black uppercase text-sm">Search Global Opportunities</button>
+            </div>
+        </section>
+    </main>
+
+    <main id="signup-page" class="page-section py-20 bg-slate-50 min-h-screen">
+        <div class="max-w-md mx-auto bg-white p-10 rounded-[3rem] shadow-2xl">
+            <h3 class="text-3xl font-black uppercase mb-8 text-center">Join Hub</h3>
+            <form onsubmit="handleAuth(event)" class="space-y-6">
+                <input type="text" placeholder="Full Name" class="input-field" required>
+                <input type="email" placeholder="Email" class="input-field" required>
+                <input type="password" placeholder="Password" class="input-field" required>
+                <button type="submit" class="w-full bg-blue-700 text-white py-5 rounded-2xl font-black uppercase text-xs">Create Account</button>
+            </form>
         </div>
+    </main>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            
-            <div class="plan-card p-10 flex flex-col">
-                <div class="mb-8">
-                    <span class="text-[10px] font-black uppercase text-slate-400">Basic Access</span>
-                    <h3 class="text-3xl font-black uppercase">FREE</h3>
-                </div>
-                <div class="flex-grow">
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> View All Continents</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> View High-Pay Jobs</div>
-                    <div class="check-item check-no"><i class="fas fa-times-circle"></i> Apply to Jobs</div>
-                    <div class="check-item check-no"><i class="fas fa-times-circle"></i> Interview Portals</div>
-                </div>
-                <button disabled class="mt-10 w-full py-4 bg-slate-100 text-slate-400 rounded-full font-black uppercase text-[10px]">Current Plan</button>
+    <main id="login-page" class="page-section py-20 bg-slate-50 min-h-screen">
+        <div class="max-w-md mx-auto bg-white p-10 rounded-[3rem] shadow-2xl">
+            <h3 class="text-3xl font-black uppercase mb-8 text-center">Login</h3>
+            <form onsubmit="handleAuth(event)" class="space-y-6">
+                <input type="email" placeholder="Email" class="input-field" required>
+                <input type="password" placeholder="Password" class="input-field" required>
+                <button type="submit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase text-xs">Login</button>
+            </form>
+        </div>
+    </main>
+
+    <main id="dashboard-page" class="page-section py-16 px-6 bg-white min-h-screen">
+        <div class="max-w-7xl mx-auto">
+            <div class="p-10 rounded-[3.5rem] shadow-2xl border-2 border-slate-100 grid grid-cols-1 md:grid-cols-4 gap-6 mb-24">
+                <select id="cont" onchange="updCountries(); chk();" class="input-field"><option value="">Continent...</option><option value="Af">Africa</option><option value="As">Asia</option><option value="Eu">Europe</option></select>
+                <select id="c-sel" onchange="chk()" class="input-field hidden-box"></select>
+                <select id="d-q" onchange="chk()" class="input-field"><option value="">Degree...</option><option value="h">High School</option><option value="d">Professional</option></select>
+                <input type="text" id="d-i" oninput="chk()" placeholder="Niche..." class="input-field">
+                <button id="s-b" onclick="performSearch()" class="md:col-span-4 py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Search</button>
             </div>
+            <div id="job-feed" class="grid grid-cols-1 md:grid-cols-3 gap-10"></div>
+        </div>
+    </main>
 
-            <div class="plan-card p-10 flex flex-col">
-                <div class="mb-8">
-                    <span class="text-[10px] font-black uppercase text-blue-600">Starter Plan</span>
-                    <h3 class="text-3xl font-black uppercase">$5<span class="text-sm">/mo</span></h3>
-                </div>
-                <div class="flex-grow">
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Africa Region Access</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 5 Regular Applications / Day</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 2 High-Pay Apps / Day</div>
-                    <div class="check-item check-no"><i class="fas fa-times-circle"></i> Other Continents</div>
-                </div>
-                <button onclick="payWithPaystack(5000)" class="mt-10 w-full py-5 btn-glow text-[10px]">Get Access</button>
+    <main id="subscription-page" class="page-section py-16 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto text-center mb-12">
+            <h2 class="text-4xl font-black uppercase">Subscription Plans</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <div class="plan-card p-8 flex flex-col">
+                <h4 class="font-black uppercase mb-4">Free</h4>
+                <div class="check-item"><i class="fas fa-check text-green-500"></i> View Only</div>
+                <div class="check-item"><i class="fas fa-times text-slate-300"></i> No Applications</div>
+                <button class="mt-auto w-full py-4 bg-slate-100 rounded-full font-black text-[10px] uppercase">Active</button>
             </div>
-
-            <div class="plan-card plan-popular p-10 flex flex-col border-2">
-                <div class="absolute top-4 right-6 bg-blue-700 text-white text-[8px] font-black px-3 py-1 rounded-full uppercase">Most Popular</div>
-                <div class="mb-8">
-                    <span class="text-[10px] font-black uppercase text-blue-600">Pro Plan</span>
-                    <h3 class="text-3xl font-black uppercase">$10<span class="text-sm">/mo</span></h3>
-                </div>
-                <div class="flex-grow">
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Africa & Asia Regions</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 30 Regular Apps / Day</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 6 High-Pay Apps / Day</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Quick Portal Access</div>
-                </div>
-                <button onclick="payWithPaystack(10000)" class="mt-10 w-full py-5 btn-glow text-[10px]">Get Access</button>
+            <div class="plan-card p-8 flex flex-col">
+                <h4 class="font-black uppercase mb-4">$5 <span class="text-xs">/mo</span></h4>
+                <div class="check-item"><i class="fas fa-check text-green-500"></i> Africa Jobs</div>
+                <div class="check-item"><i class="fas fa-check text-green-500"></i> 5 Apps/Day</div>
+                <button onclick="payWithPaystack(500)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button>
             </div>
-
-            <div class="plan-card p-10 flex flex-col">
-                <div class="mb-8">
-                    <span class="text-[10px] font-black uppercase text-blue-600">Ultra-VIP Plan</span>
-                    <h3 class="text-3xl font-black uppercase">$30<span class="text-sm">/mo</span></h3>
-                </div>
-                <div class="flex-grow">
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Unlimited Worldwide Access</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Unlimited Regular Apps</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Unlimited High-Pay Apps</div>
-                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> VIP Interview Portals</div>
-                </div>
-                <button onclick="payWithPaystack(30000)" class="mt-10 w-full py-5 btn-glow text-[10px]">Get Access</button>
+            <div class="plan-card p-8 border-blue-500 flex flex-col">
+                <h4 class="font-black uppercase mb-4">$10 <span class="text-xs">/mo</span></h4>
+                <div class="check-item"><i class="fas fa-check text-green-500"></i> Africa & Asia</div>
+                <div class="check-item"><i class="fas fa-check text-green-500"></i> 30 Apps/Day</div>
+                <button onclick="payWithPaystack(1000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button>
             </div>
-
+            <div class="plan-card p-8 flex flex-col">
+                <h4 class="font-black uppercase mb-4">$30 <span class="text-xs">/mo</span></h4>
+                <div class="check-item"><i class="fas fa-check text-green-500"></i> Global Access</div>
+                <div class="check-item"><i class="fas fa-check text-green-500"></i> Unlimited Apps</div>
+                <button onclick="payWithPaystack(3000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button>
+            </div>
         </div>
     </main>
 
     <script>
         const PUBLIC_KEY = 'pk_live_4689394fbf57d1426973e2213af54e4b2ce49011';
-
-        function payWithPaystack(amountInCents) {
-            let handler = PaystackPop.setup({
-                key: PUBLIC_KEY,
-                email: 'customer@email.com', // In live version, this pulls from currentUser
-                amount: amountInCents,
-                currency: 'USD',
-                callback: function(response) {
-                    alert('Payment Successful! Reference: ' + response.reference);
-                    // This is where your webhook at supabase catches the rest
-                },
-                onClose: function() {
-                    alert('Transaction cancelled.');
-                }
-            });
-            handler.openIframe();
-        }
+        const c_data = { Af: ["Kenya", "South Africa", "Nigeria"], As: ["Japan", "UAE", "Singapore"], Eu: ["UK", "Germany"] };
+        const titles = ["Clinical Manager", "Systems Architect", "Legal Counsel", "Aviation Lead", "Data Scientist"];
 
         function showPage(id) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active'));
             document.getElementById(id + '-page').classList.add('page-active');
+            if(id === 'dashboard') loadWindowShopping();
+        }
+
+        function handleAuth(e) { e.preventDefault(); document.getElementById('nav-auth').classList.add('hidden'); document.getElementById('nav-user').classList.remove('hidden'); showPage('dashboard'); }
+
+        function updCountries() {
+            const v = document.getElementById('cont').value;
+            const s = document.getElementById('c-sel');
+            if(v) { s.classList.remove('hidden-box'); s.innerHTML = c_data[v].map(c => `<option>${c}</option>`).join(''); }
+        }
+
+        function chk() {
+            const ready = document.getElementById('cont').value && document.getElementById('d-q').value;
+            document.getElementById('s-b').className = ready ? "md:col-span-4 py-6 rounded-2xl font-black uppercase text-sm btn-ready" : "md:col-span-4 py-6 rounded-2xl font-black uppercase text-sm btn-locked";
+        }
+
+        function loadWindowShopping() {
+            const feed = document.getElementById('job-feed');
+            feed.innerHTML = '';
+            for (let i = 0; i < 12; i++) feed.innerHTML += renderCard(titles[i % 5], "$ 8,000", "Global");
+        }
+
+        function performSearch() {
+            const feed = document.getElementById('job-feed');
+            const country = document.getElementById('c-sel').value;
+            const symbol = country === "UK" ? "£" : "$";
+            feed.innerHTML = '';
+            for (let i = 0; i < 15; i++) feed.innerHTML += renderCard(titles[i % 5], symbol + " 7,500", country);
+        }
+
+        function renderCard(t, p, l) {
+            return `<div class="job-card p-10">
+                <h4 class="text-xl font-black uppercase mb-4">${t}</h4>
+                <div class="money-text mb-2">${p}</div>
+                <div class="location-text mb-6">${l}</div>
+                <p class="text-xs text-slate-400 italic mb-8">High-priority international role. Portals locked for Free Tier.</p>
+                <button onclick="showPage('subscription')" class="w-full py-4 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Unlock Application</button>
+            </div>`;
+        }
+
+        function payWithPaystack(amt) {
+            let handler = PaystackPop.setup({
+                key: PUBLIC_KEY, email: 'user@jobzzy.com', amount: amt * 100, currency: 'USD',
+                callback: (r) => alert('Success! Ref: ' + r.reference),
+                onClose: () => alert('Window Closed')
+            });
+            handler.openIframe();
         }
     </script>
 </body>
