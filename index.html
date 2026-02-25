@@ -3,34 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobzzy | Global Professional Hub</title>
+    <title>Jobzzy | Professional Subscription</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #0f172a; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f172a; }
         .page-section { display: none; }
         .page-active { display: block; }
         
-        .money-text { font-size: 2.2rem; font-weight: 900; color: #000; letter-spacing: -1.5px; }
-        .location-text { color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: flex; align-items: center; gap: 6px; letter-spacing: 2px; }
-        .job-card { border: 1px solid #f1f5f9; border-radius: 2.5rem; transition: 0.4s ease; background: #fff; height: 100%; display: flex; flex-direction: column; }
-        .job-card:hover { transform: translateY(-10px); box-shadow: 0 30px 50px rgba(0,0,0,0.06); border-color: #2563eb; }
-        
-        .btn-ready { animation: ledRotate 1.5s infinite; border: 2px solid #2563eb !important; background: #1d4ed8 !important; color: white !important; cursor: pointer; }
-        .btn-locked { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; border: 2px solid transparent; }
-        .input-field { width: 100%; padding: 1.25rem; background: #f8fafc; border-radius: 1.25rem; border: 2px solid transparent; font-weight: 600; outline: none; transition: 0.3s; }
-        .input-field:focus { border-color: #2563eb; background: #fff; }
-        .hidden-box { display: none; }
-
-        /* Profile Modal Style */
-        #profile-modal { display: none; position: fixed; top: 80px; right: 40px; width: 300px; background: white; border-radius: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid #f1f5f9; z-index: 100; padding: 2rem; }
-
-        @keyframes ledRotate {
-            0%, 100% { box-shadow: 0 0 10px #2563eb; }
-            50% { box-shadow: 0 0 25px #60a5fa; }
+        /* Glowing Subscription Cards */
+        .plan-card { 
+            border: 2px solid #f1f5f9; 
+            border-radius: 3rem; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            background: white;
+            position: relative;
+            overflow: hidden;
         }
+        .plan-card:hover { 
+            transform: scale(1.05); 
+            border-color: #2563eb; 
+            box-shadow: 0 30px 60px rgba(37, 99, 235, 0.1); 
+        }
+        .plan-popular { 
+            border-color: #2563eb; 
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.2); 
+        }
+
+        /* Glowing Button */
+        .btn-glow {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+            animation: pulse-blue 2s infinite;
+            border-radius: 9999px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(37, 99, 235, 0.8); }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        .check-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; }
+        .check-yes { color: #10b981; }
+        .check-no { color: #94a3b8; text-decoration: line-through; }
     </style>
 </head>
 <body>
@@ -40,265 +65,105 @@
             <i class="fas fa-suitcase text-blue-700 text-2xl"></i>
             <h1 class="text-2xl font-black tracking-tighter uppercase">JOBZZY</h1>
         </div>
-        
-        <div id="nav-auth" class="flex items-center gap-6">
-            <button onclick="showPage('login')" class="text-xs font-black uppercase tracking-widest text-slate-400">Login</button>
-            <button onclick="showPage('signup')" class="bg-blue-700 text-white px-8 py-3 rounded-full font-black text-xs uppercase shadow-lg">Join Hub</button>
-        </div>
-
-        <div id="nav-user" class="hidden flex items-center gap-4">
-            <div class="flex flex-col items-end mr-2">
-                <span id="tier-display" class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-tighter">Free Tier</span>
-            </div>
-            <div onclick="toggleProfile()" class="w-12 h-12 rounded-full border-2 border-blue-700 flex items-center justify-center bg-blue-50 cursor-pointer hover:bg-blue-100 transition">
-                <i class="fas fa-user-tie text-blue-700 text-lg"></i>
+        <div id="nav-user" class="flex items-center gap-4">
+            <span class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full uppercase">Free Tier</span>
+            <div onclick="showPage('profile')" class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center border-2 border-blue-700 cursor-pointer">
+                <i class="fas fa-user-tie text-blue-700"></i>
             </div>
         </div>
     </nav>
 
-    <div id="profile-modal">
-        <div class="text-center">
-            <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-user text-2xl text-slate-400"></i>
-            </div>
-            <h5 id="prof-name" class="font-black uppercase text-sm tracking-tight">User Name</h5>
-            <p id="prof-email" class="text-xs text-slate-400 font-bold mb-6">user@email.com</p>
-            <hr class="mb-6">
-            <div class="text-left space-y-4">
-                <button onclick="alert('Redirecting to Payment...')" class="w-full text-left text-[10px] font-black uppercase text-blue-600 hover:translate-x-1 transition flex justify-between">Upgrade Tier <i class="fas fa-arrow-right"></i></button>
-                <button onclick="location.reload()" class="w-full text-left text-[10px] font-black uppercase text-red-500 hover:translate-x-1 transition">Sign Out</button>
-            </div>
+    <main id="subscription-page" class="page-section page-active py-20 px-6">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+            <h2 class="text-5xl font-black uppercase tracking-tighter mb-4">Choose Your <span class="text-blue-700">Global Access</span></h2>
+            <p class="font-bold text-slate-500">Stop browsing. Start applying to international markets today.</p>
         </div>
-    </div>
 
-    <main id="visitor-page" class="page-section page-active">
-        <header class="pt-24 pb-12 px-6 text-center bg-slate-50">
-            <h2 class="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter leading-[0.9]">THE WORLD IS HIRING.<br><span class="text-blue-700">STOP WAITING.</span></h2>
-            <p class="text-xl md:text-2xl font-bold text-slate-600 max-w-2xl mx-auto">Your location shouldn't limit your income. We bridge the gap between global talent and elite international careers.</p>
-        </header>
-
-        <section class="max-w-6xl mx-auto -mt-10 px-6 mb-24">
-            <div class="bg-white p-8 md:p-12 rounded-[3.5rem] shadow-2xl border-2 border-slate-100">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="flex flex-col gap-3">
-                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">1. Continent</label>
-                        <select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer"><option>Africa Region</option><option>Asia Region</option><option>European Union</option><option>The Americas</option></select>
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">2. Qualification</label>
-                        <select id="v-qual" onchange="const b = document.getElementById('v-exp'); b.style.display = (this.value === 'e') ? 'flex' : 'none';" class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer">
-                            <option value="n">High School Certificate</option><option value="e">Diploma</option><option value="e">Bachelor's Degree</option><option value="e">Master's Degree</option>
-                        </select>
-                    </div>
-                    <div id="v-exp" class="hidden-box flex flex-col gap-3">
-                        <label class="text-[10px] font-black uppercase text-blue-600 ml-2 italic">3. Expertise</label>
-                        <input type="text" placeholder="Law, Medicine..." class="w-full p-5 bg-blue-50 rounded-2xl font-bold text-sm outline-none border-2 border-blue-100">
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2 italic">4. Mode</label>
-                        <select class="w-full p-5 bg-slate-50 rounded-2xl font-bold text-sm outline-none cursor-pointer"><option>Remote</option><option>On-Site</option></select>
-                    </div>
-                </div>
-                <button onclick="showPage('signup')" class="w-full mt-10 bg-blue-700 text-white py-6 rounded-[2rem] font-black uppercase text-sm shadow-xl">Search Global Opportunities</button>
-            </div>
-        </section>
-
-        <section class="max-w-7xl mx-auto px-6 pb-32">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                <div class="job-card p-10">
-                    <div class="flex justify-between items-center mb-8"><i class="fas fa-network-wired text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-slate-100 px-3 py-1 rounded-full uppercase">Relocation</span></div>
-                    <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Infrastructure Architect</h4>
-                    <div class="money-text mb-2">€ 5,800.00</div>
-                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> Berlin, Germany</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">European data centers are expanding rapidly and lack the technical oversight to manage physical hardware scaling. This role is vital to ensuring 99.9% uptime for global cloud services.</p>
-                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
-                </div>
-                <div class="job-card p-10">
-                    <div class="flex justify-between items-center mb-8"><i class="fas fa-balance-scale text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Remote</span></div>
-                    <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Corporate Legal Liaison</h4>
-                    <div class="money-text mb-2">£ 4,500.00</div>
-                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> London, UK</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">International firms require remote legal analysts to manage contract compliance across different time zones to avoid litigation delays.</p>
-                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
-                </div>
-                <div class="job-card p-10 border-blue-100 border-2">
-                    <div class="flex justify-between items-center mb-8"><i class="fas fa-user-md text-blue-700 text-2xl"></i><span class="text-[9px] font-black bg-slate-100 px-3 py-1 rounded-full uppercase">On-Site</span></div>
-                    <h4 class="text-2xl font-black uppercase mb-3 leading-tight">Surgical Consultant</h4>
-                    <div class="money-text mb-2">$ 8,200.00</div>
-                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> California, USA</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">Medical facilities require expert diagnostic managers to oversee surgical throughput. High priority for qualified medical practitioners.</p>
-                    <button onclick="showPage('signup')" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px]">Apply Now</button>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <main id="signup-page" class="page-section py-20 bg-slate-50 min-h-screen">
-        <div class="max-w-md mx-auto bg-white p-10 rounded-[3rem] shadow-2xl">
-            <h3 class="text-3xl font-black uppercase mb-8 text-center">Join the Hub</h3>
-            <form onsubmit="handleAuth(event, 'signup')" class="space-y-6">
-                <input id="reg-name" type="text" placeholder="Full Name" class="input-field" required>
-                <input id="reg-email" type="email" placeholder="Email Address" class="input-field" required>
-                <input type="password" placeholder="Create Password" class="input-field" required>
-                <button type="submit" class="w-full bg-blue-700 text-white py-5 rounded-2xl font-black uppercase text-xs">Create Account</button>
-            </form>
-        </div>
-    </main>
-
-    <main id="login-page" class="page-section py-20 bg-slate-50 min-h-screen">
-        <div class="max-w-md mx-auto bg-white p-10 rounded-[3rem] shadow-2xl">
-            <h3 class="text-3xl font-black uppercase mb-8 text-center">Welcome Back</h3>
-            <form onsubmit="handleAuth(event, 'login')" class="space-y-6">
-                <input id="log-email" type="email" placeholder="Email" class="input-field" required>
-                <input type="password" placeholder="Password" class="input-field" required>
-                <button type="submit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase text-xs">Login</button>
-            </form>
-        </div>
-    </main>
-
-    <main id="dashboard-page" class="page-section py-16 px-6 bg-white min-h-screen">
-        <div class="max-w-7xl mx-auto">
-            <h3 class="text-4xl font-black uppercase mb-12">Search Terminal</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             
-            <div class="p-10 rounded-[3.5rem] shadow-2xl border-2 border-slate-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-                <div class="flex flex-col gap-2">
-                    <label class="text-[9px] font-black uppercase text-slate-400 ml-2 italic">1. Continent</label>
-                    <select id="cont" onchange="updCountries(); chk();" class="input-field">
-                        <option value="">Select...</option><option value="Af">Africa</option><option value="As">Asia</option><option value="Eu">Europe</option><option value="Am">Americas</option>
-                    </select>
+            <div class="plan-card p-10 flex flex-col">
+                <div class="mb-8">
+                    <span class="text-[10px] font-black uppercase text-slate-400">Basic Access</span>
+                    <h3 class="text-3xl font-black uppercase">FREE</h3>
                 </div>
-                <div id="c-wrap" class="hidden-box flex flex-col gap-2">
-                    <label class="text-[9px] font-black uppercase text-blue-600 ml-2 italic">2. Country</label>
-                    <select id="c-sel" onchange="chk()" class="input-field"></select>
+                <div class="flex-grow">
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> View All Continents</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> View High-Pay Jobs</div>
+                    <div class="check-item check-no"><i class="fas fa-times-circle"></i> Apply to Jobs</div>
+                    <div class="check-item check-no"><i class="fas fa-times-circle"></i> Interview Portals</div>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label class="text-[9px] font-black uppercase text-slate-400 ml-2 italic">3. Qualification</label>
-                    <select id="d-q" onchange="const n=document.getElementById('n-wrap'); n.style.display=(this.value==='h')?'none':'flex'; chk();" class="input-field">
-                        <option value="">Level...</option>
-                        <option value="h">High School Certificate</option>
-                        <option value="d">Diploma</option>
-                        <option value="b">Bachelor's Degree</option>
-                        <option value="p">Master's / PhD</option>
-                    </select>
-                </div>
-                <div id="n-wrap" class="flex flex-col gap-2">
-                    <label class="text-[9px] font-black uppercase text-blue-600 ml-2 italic">4. Niche</label>
-                    <input type="text" id="d-i" oninput="chk()" placeholder="Medicine, Law..." class="input-field">
-                </div>
-                <div class="lg:col-span-4"><button id="s-b" onclick="performSearch()" class="w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked">Initiate Global Search</button></div>
+                <button disabled class="mt-10 w-full py-4 bg-slate-100 text-slate-400 rounded-full font-black uppercase text-[10px]">Current Plan</button>
             </div>
 
-            <div id="job-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+            <div class="plan-card p-10 flex flex-col">
+                <div class="mb-8">
+                    <span class="text-[10px] font-black uppercase text-blue-600">Starter Plan</span>
+                    <h3 class="text-3xl font-black uppercase">$5<span class="text-sm">/mo</span></h3>
+                </div>
+                <div class="flex-grow">
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Africa Region Access</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 5 Regular Applications / Day</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 2 High-Pay Apps / Day</div>
+                    <div class="check-item check-no"><i class="fas fa-times-circle"></i> Other Continents</div>
+                </div>
+                <button onclick="payWithPaystack(5000)" class="mt-10 w-full py-5 btn-glow text-[10px]">Get Access</button>
+            </div>
+
+            <div class="plan-card plan-popular p-10 flex flex-col border-2">
+                <div class="absolute top-4 right-6 bg-blue-700 text-white text-[8px] font-black px-3 py-1 rounded-full uppercase">Most Popular</div>
+                <div class="mb-8">
+                    <span class="text-[10px] font-black uppercase text-blue-600">Pro Plan</span>
+                    <h3 class="text-3xl font-black uppercase">$10<span class="text-sm">/mo</span></h3>
+                </div>
+                <div class="flex-grow">
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Africa & Asia Regions</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 30 Regular Apps / Day</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> 6 High-Pay Apps / Day</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Quick Portal Access</div>
+                </div>
+                <button onclick="payWithPaystack(10000)" class="mt-10 w-full py-5 btn-glow text-[10px]">Get Access</button>
+            </div>
+
+            <div class="plan-card p-10 flex flex-col">
+                <div class="mb-8">
+                    <span class="text-[10px] font-black uppercase text-blue-600">Ultra-VIP Plan</span>
+                    <h3 class="text-3xl font-black uppercase">$30<span class="text-sm">/mo</span></h3>
+                </div>
+                <div class="flex-grow">
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Unlimited Worldwide Access</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Unlimited Regular Apps</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> Unlimited High-Pay Apps</div>
+                    <div class="check-item check-yes"><i class="fas fa-check-circle"></i> VIP Interview Portals</div>
+                </div>
+                <button onclick="payWithPaystack(30000)" class="mt-10 w-full py-5 btn-glow text-[10px]">Get Access</button>
+            </div>
+
         </div>
     </main>
 
     <script>
-        // GLOBAL USER STATE
-        let currentUser = { name: "Guest", email: "guest@jobzzy.com", tier: "Free Tier" };
+        const PUBLIC_KEY = 'pk_live_4689394fbf57d1426973e2213af54e4b2ce49011';
 
-        const c_data = {
-            Af: ["Kenya", "Rwanda", "South Africa", "Nigeria", "Tanzania", "Ghana"],
-            As: ["Japan", "Singapore", "UAE", "Qatar", "China"],
-            Eu: ["Germany", "UK", "France", "Norway", "Switzerland"],
-            Am: ["USA", "Canada", "Brazil"]
-        };
-
-        const hsTitles = ["Airport Ground Staff", "Warehouse Logistics Lead", "International Courier", "Hospitality Liaison", "Security Fleet Officer", "Retail Operations Lead", "Delivery Systems Manager", "Event Setup Coordinator", "Port Terminal Assistant", "Global Mail Dispatcher"];
-        const profTitles = ["Senior Systems Architect", "Clinical Trial Manager", "Corporate Legal Counsel", "Biomedical Engineer", "Full Stack Developer", "Financial Risk Analyst", "Public Health Director", "AI Product Owner"];
-
-        function getCurrency(country) {
-            if (country === "UK") return "£";
-            if (["Germany", "France", "Norway", "Switzerland"].includes(country)) return "€";
-            if (["UAE", "Qatar"].includes(country)) return "AED";
-            return "$";
+        function payWithPaystack(amountInCents) {
+            let handler = PaystackPop.setup({
+                key: PUBLIC_KEY,
+                email: 'customer@email.com', // In live version, this pulls from currentUser
+                amount: amountInCents,
+                currency: 'USD',
+                callback: function(response) {
+                    alert('Payment Successful! Reference: ' + response.reference);
+                    // This is where your webhook at supabase catches the rest
+                },
+                onClose: function() {
+                    alert('Transaction cancelled.');
+                }
+            });
+            handler.openIframe();
         }
 
-        function toggleProfile() {
-            const modal = document.getElementById('profile-modal');
-            modal.style.display = (modal.style.display === 'block') ? 'none' : 'block';
-        }
-
-        function handleAuth(e, type) {
-            e.preventDefault();
-            if(type === 'signup') {
-                currentUser.name = document.getElementById('reg-name').value;
-                currentUser.email = document.getElementById('reg-email').value;
-            } else {
-                currentUser.email = document.getElementById('log-email').value;
-                currentUser.name = "Welcome Back";
-            }
-            document.getElementById('prof-name').innerText = currentUser.name;
-            document.getElementById('prof-email').innerText = currentUser.email;
-            document.getElementById('nav-auth').classList.add('hidden');
-            document.getElementById('nav-user').classList.remove('hidden');
-            showPage('dashboard');
-        }
-
-        function loadWindowShopping() {
-            const feed = document.getElementById('job-feed');
-            feed.innerHTML = '';
-            const worlds = ["USA", "Germany", "Japan", "South Africa", "UAE", "UK", "Canada", "Singapore", "Kenya", "France"];
-            for (let i = 1; i <= 20; i++) {
-                const title = profTitles[i % profTitles.length];
-                const country = worlds[i % worlds.length];
-                const symbol = getCurrency(country);
-                const pay = `${symbol} ${7200 + (i * 35)}.00`;
-                feed.innerHTML += renderCard(title, pay, country, i);
-            }
-        }
-
-        function performSearch() {
-            const country = document.getElementById('c-sel').value;
-            const qual = document.getElementById('d-q').value;
-            const feed = document.getElementById('job-feed');
-            const symbol = getCurrency(country);
-            feed.innerHTML = '';
-            let titles = (qual === 'h') ? hsTitles : profTitles;
-            for (let i = 1; i <= titles.length; i++) {
-                const title = titles[i - 1];
-                const pay = (qual === 'h') ? `${symbol} ${2800 + (i * 12)}.00` : `${symbol} ${7200 + (i * 45)}.00`;
-                feed.innerHTML += renderCard(title, pay, country, i);
-            }
-        }
-
-        function renderCard(title, pay, location, id) {
-            // ALL JOBS LOCKED IF IN FREE TIER
-            const lockMsg = "alert('ACCESS DENIED: You are currently on the FREE TIER. Upgrade to BASIC, PREMIUM, or VIP to unlock portals.')";
-            return `
-                <div class="job-card p-10">
-                    <div class="flex justify-between items-center mb-8">
-                        <i class="fas fa-briefcase text-blue-700 text-2xl"></i>
-                        <span class="text-[9px] font-black bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase">Ref ID: ${1000+id}</span>
-                    </div>
-                    <h4 class="text-2xl font-black uppercase mb-6 leading-tight">${title}</h4>
-                    <div class="money-text mb-2">${pay}</div>
-                    <div class="location-text mb-8"><i class="fas fa-map-marker-alt text-red-500"></i> ${location}</div>
-                    <p class="text-sm text-slate-500 italic mb-10 leading-relaxed">
-                        High-impact professional role in ${location}. Full details on portal.
-                    </p>
-                    <button onclick="${lockMsg}" class="mt-auto w-full py-5 border-2 border-slate-900 rounded-2xl font-black uppercase text-[10px] tracking-widest bg-slate-50">Locked (Free Tier)</button>
-                </div>`;
-        }
-
-        function showPage(id) { 
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active')); 
-            document.getElementById(id + '-page').classList.add('page-active'); 
-            document.getElementById('profile-modal').style.display = 'none';
-            if(id === 'dashboard') loadWindowShopping();
-            window.scrollTo(0,0); 
-        }
-        function updCountries() {
-            const v = document.getElementById('cont').value;
-            const s = document.getElementById('c-sel');
-            const w = document.getElementById('c-wrap');
-            if(v) { w.style.display='flex'; s.innerHTML='<option value="">Select Country...</option>'+c_data[v].map(c=>`<option value="${c}">${c}</option>`).join(''); } 
-            else { w.style.display='none'; }
-        }
-        function chk() {
-            const r = document.getElementById('cont').value && document.getElementById('c-sel').value && document.getElementById('d-q').value;
-            const b = document.getElementById('s-b');
-            if(r) { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-ready'; b.innerHTML='Initiate Global Search <i class="fas fa-bolt ml-2"></i>'; }
-            else { b.className='w-full py-6 rounded-2xl font-black uppercase text-sm btn-locked'; b.innerHTML='Initiate Global Search'; }
+        function showPage(id) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('page-active'));
+            document.getElementById(id + '-page').classList.add('page-active');
         }
     </script>
 </body>
