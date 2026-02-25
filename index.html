@@ -27,9 +27,10 @@
         .input-field { width: 100%; padding: 1.25rem; background: #f8fafc; border-radius: 1.25rem; border: 2px solid transparent; font-weight: 600; outline: none; transition: 0.3s; }
         .input-field:focus { border-color: #2563eb; background: #fff; }
         
-        .plan-card { border: 2px solid #f1f5f9; border-radius: 3rem; transition: 0.4s ease; background: white; }
-        .plan-card:hover { transform: scale(1.02); border-color: #2563eb; box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1); }
-        .check-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; }
+        /* HUGE SUBSCRIPTION CARDS */
+        .plan-card { border: 2px solid #f1f5f9; border-radius: 4rem; transition: 0.4s ease; background: white; min-height: 600px; padding: 3.5rem; }
+        .plan-card:hover { transform: scale(1.05); border-color: #2563eb; box-shadow: 0 40px 80px rgba(37, 99, 235, 0.15); }
+        .check-item { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
 
         @keyframes ledRotate { 0%, 100% { box-shadow: 0 0 10px #2563eb; } 50% { box-shadow: 0 0 25px #60a5fa; } }
         @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
@@ -108,7 +109,7 @@
             <h3 class="text-3xl font-black uppercase mb-8 text-center">Join Hub</h3>
             <form onsubmit="handleAuth(event)" class="space-y-6">
                 <input type="text" placeholder="Full Name" class="input-field" required>
-                <input type="email" placeholder="Email" class="input-field" required>
+                <input type="email" placeholder="Email" id="user-email" class="input-field" required>
                 <input type="password" placeholder="Password" class="input-field" required>
                 <button type="submit" class="w-full bg-blue-700 text-white py-5 rounded-2xl font-black uppercase text-xs">Create Account</button>
             </form>
@@ -139,15 +140,47 @@
         </div>
     </main>
 
-    <main id="subscription-page" class="page-section py-16 px-6 bg-slate-50">
-        <div class="max-w-7xl mx-auto text-center mb-12">
-            <h2 class="text-4xl font-black uppercase tracking-tight">Upgrade Your Access</h2>
+    <main id="subscription-page" class="page-section py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto text-center mb-20">
+            <h2 class="text-6xl font-black uppercase tracking-tight mb-4">Select Your Tier</h2>
+            <p class="text-xl font-bold text-slate-500">Gain direct access to global employers.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            <div class="plan-card p-8 flex flex-col"><h4 class="font-black uppercase mb-4">Free</h4><div class="check-item"><i class="fas fa-check text-green-500"></i> View All Jobs</div><div class="check-item"><i class="fas fa-times text-slate-300"></i> No Applications</div><button class="mt-auto w-full py-4 bg-slate-100 rounded-full font-black text-[10px] uppercase">Active</button></div>
-            <div class="plan-card p-8 flex flex-col"><h4 class="font-black uppercase mb-4">$5 <span class="text-xs">/mo</span></h4><div class="check-item"><i class="fas fa-check text-green-500"></i> Africa Region</div><div class="check-item"><i class="fas fa-check text-green-500"></i> 5 Apps/Day</div><button onclick="payWithPaystack(500)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button></div>
-            <div class="plan-card p-8 border-blue-500 flex flex-col"><h4 class="font-black uppercase mb-4">$10 <span class="text-xs">/mo</span></h4><div class="check-item"><i class="fas fa-check text-green-500"></i> Africa & Asia</div><div class="check-item"><i class="fas fa-check text-green-500"></i> 30 Apps/Day</div><button onclick="payWithPaystack(1000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button></div>
-            <div class="plan-card p-8 flex flex-col"><h4 class="font-black uppercase mb-4">$30 <span class="text-xs">/mo</span></h4><div class="check-item"><i class="fas fa-check text-green-500"></i> Global Access</div><div class="check-item"><i class="fas fa-check text-green-500"></i> Unlimited Apps</div><button onclick="payWithPaystack(3000)" class="mt-auto w-full py-4 btn-glow text-[10px] uppercase">Get Access</button></div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-[90rem] mx-auto">
+            <div class="plan-card flex flex-col">
+                <h4 class="text-3xl font-black uppercase mb-2">Free</h4>
+                <p class="text-slate-400 font-bold mb-10 italic">Explorer</p>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> View All Jobs</div>
+                <div class="check-item"><i class="fas fa-times text-slate-300 text-xl"></i> Apply to Jobs</div>
+                <button class="mt-auto w-full py-8 bg-slate-100 rounded-3xl font-black text-sm uppercase">Currently Active</button>
+            </div>
+            
+            <div class="plan-card flex flex-col">
+                <h4 class="text-3xl font-black uppercase mb-2">$5 <span class="text-lg text-slate-400">/mo</span></h4>
+                <p class="text-blue-600 font-black mb-10 italic uppercase tracking-widest">Starter Hub</p>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> Africa Region Access</div>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> 5 Applications Per Day</div>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> Profile Verification</div>
+                <button onclick="payWithPaystack(5)" class="mt-auto w-full py-8 btn-glow text-sm uppercase shadow-2xl">Get Access Now</button>
+            </div>
+
+            <div class="plan-card border-blue-600 flex flex-col scale-105 shadow-xl">
+                <div class="bg-blue-600 text-white text-[10px] font-black uppercase py-2 px-6 rounded-full self-start mb-6">Most Popular</div>
+                <h4 class="text-3xl font-black uppercase mb-2">$10 <span class="text-lg text-slate-400">/mo</span></h4>
+                <p class="text-blue-600 font-black mb-10 italic uppercase tracking-widest">Pro Professional</p>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> Africa & Asia Access</div>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> 30 Applications Per Day</div>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> Priority Support</div>
+                <button onclick="payWithPaystack(10)" class="mt-auto w-full py-8 btn-glow text-sm uppercase shadow-2xl">Go Pro Now</button>
+            </div>
+
+            <div class="plan-card flex flex-col">
+                <h4 class="text-3xl font-black uppercase mb-2">$30 <span class="text-lg text-slate-400">/mo</span></h4>
+                <p class="text-blue-600 font-black mb-10 italic uppercase tracking-widest">Global VIP</p>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> Global Access (All)</div>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> Unlimited Applications</div>
+                <div class="check-item"><i class="fas fa-check text-green-500 text-xl"></i> Resume Optimization</div>
+                <button onclick="payWithPaystack(30)" class="mt-auto w-full py-8 btn-glow text-sm uppercase shadow-2xl">Unlock The World</button>
+            </div>
         </div>
     </main>
 
@@ -217,11 +250,38 @@
             </div>`;
         }
 
-        function payWithPaystack(amt) {
+        // --- UPDATED PAYSTACK LOGIC FOR KES SETTLEMENT ---
+        function payWithPaystack(usdAmount) {
+            // Conversion rate (Adjust as needed)
+            const rate = 135; 
+            const kesAmount = usdAmount * rate;
+            const totalInCents = kesAmount * 100; // Paystack takes subunits
+
             let handler = PaystackPop.setup({
-                key: PUBLIC_KEY, email: 'user@jobzzy.com', amount: amt * 100, currency: 'USD',
-                callback: (r) => alert('Success! Ref: ' + r.reference),
-                onClose: () => {}
+                key: PUBLIC_KEY, 
+                email: document.getElementById('user-email')?.value || 'user@jobzzy.com', 
+                amount: totalInCents, 
+                currency: 'KES',
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "Original Plan",
+                            variable_name: "plan_usd",
+                            value: usdAmount
+                        },
+                        {
+                            display_name: "Webhook URL",
+                            variable_name: "webhook",
+                            value: "https://hnfhmlghnqlxgdecoetz.supabase.co/functions/v1/paystack_webhook"
+                        }
+                    ]
+                },
+                callback: function(response) {
+                    alert('Malipo Yamefaulu! Reference: ' + response.reference);
+                },
+                onClose: function() {
+                    alert('Transaction Cancelled.');
+                }
             });
             handler.openIframe();
         }
