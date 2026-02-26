@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobzzy | Gateway</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* 1. SMOKY BACKGROUND (UNCHANGED) */
@@ -148,16 +149,16 @@
             <div id="signup-form">
                 <h2 class="text-3xl font-black text-slate-900 mb-2">Register Brand</h2>
                 <div class="space-y-4 mt-6">
-                    <input type="text" placeholder="Business Name" class="w-full p-4 rounded-2xl text-slate-700">
-                    <input type="email" placeholder="Business Email" class="w-full p-4 rounded-2xl text-slate-700">
-                    <select class="w-full p-4 rounded-2xl text-slate-500 bg-white/60">
+                    <input type="text" id="reg-name" placeholder="Business Name" class="w-full p-4 rounded-2xl text-slate-700">
+                    <input type="email" id="reg-email" placeholder="Business Email" class="w-full p-4 rounded-2xl text-slate-700">
+                    <select id="reg-size" class="w-full p-4 rounded-2xl text-slate-500 bg-white/60">
                         <option value="">Team Size</option>
                         <option value="1-10">1 - 10 Workers</option>
                         <option value="11-50">11 - 50 Workers</option>
                         <option value="50+">50+ Workers</option>
                     </select>
-                    <input type="password" placeholder="Create Password" class="w-full p-4 rounded-2xl text-slate-700">
-                    <button class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Create Account</button>
+                    <input type="password" id="reg-password" placeholder="Create Password" class="w-full p-4 rounded-2xl text-slate-700">
+                    <button onclick="handleSignUp()" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Create Account</button>
                 </div>
                 <p class="text-center mt-8 text-slate-500 text-sm">
                     Already have a brand account? <span class="glow-link ml-1" onclick="toggleAuth()">Login here</span>
@@ -167,9 +168,9 @@
             <div id="login-form" class="hidden">
                 <h2 class="text-3xl font-black text-slate-900 mb-2">Brand Login</h2>
                 <div class="space-y-4 mt-6">
-                    <input type="text" placeholder="Business Email" class="w-full p-4 rounded-2xl text-slate-700">
-                    <input type="password" placeholder="Password" class="w-full p-4 rounded-2xl text-slate-700">
-                    <button class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Secure Login</button>
+                    <input type="email" id="log-email" placeholder="Business Email" class="w-full p-4 rounded-2xl text-slate-700">
+                    <input type="password" id="log-password" placeholder="Password" class="w-full p-4 rounded-2xl text-slate-700">
+                    <button onclick="handleLogin()" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Secure Login</button>
                 </div>
                 <p class="text-center mt-8 text-slate-500 text-sm">
                     Don't have an account? <span class="glow-link ml-1" onclick="toggleAuth()">Sign up here</span>
@@ -180,10 +181,14 @@
     </div>
 
     <script>
-        // 1. Splash logic
+        // --- SUPABASE CONFIG ---
+        const SUPABASE_URL = "https://hnfhmlghnqlxgdecoetz.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_-jtctinLpsT0jdHwxPDmVw_Yb2AZTOo";
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // --- UI LOGIC ---
         setTimeout(() => { document.getElementById('splash').classList.add('fade-out'); }, 5000);
 
-        // 2. Navigation logic
         function openHireTalent() {
             document.getElementById('gateway-section').classList.add('hidden');
             document.getElementById('auth-section').classList.remove('hidden');
@@ -194,10 +199,38 @@
             document.getElementById('login-form').classList.toggle('hidden');
         }
 
-        // 3. Building cycle logic
         const bldg = document.getElementById('bldg');
         let night = false;
         setInterval(() => { night = !night; bldg.innerHTML = night ? '🏙️' : '🏢'; }, 4000);
+
+        // --- AUTH DATABASE LOGIC ---
+        async function handleSignUp() {
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const bizName = document.getElementById('reg-name').value;
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: { data: { business_name: bizName } }
+            });
+
+            if (error) alert(error.message);
+            else alert("Brand Registered! Check your email for verification.");
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('log-email').value;
+            const password = document.getElementById('log-password').value;
+
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) alert(error.message);
+            else alert("Welcome back to Jobzzy!");
+        }
     </script>
 </body>
 </html>
