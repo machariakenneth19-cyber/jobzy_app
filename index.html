@@ -2,161 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobzzy | Gateway</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>Jobzzy | Global Terms of Service</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 1. SMOKY BACKGROUND (SACRED) */
-        body { margin: 0; background: #ffffff; height: 100vh; overflow: hidden; font-family: 'Inter', sans-serif; }
-        .smoke-container { position: fixed; width: 100%; height: 100%; z-index: -1; filter: blur(70px); }
-        .smoke-cloud { position: absolute; border-radius: 50%; animation: drift 15s infinite alternate ease-in-out; }
-        .blue-cloud { width: 600px; height: 600px; background: rgba(59, 130, 246, 0.2); top: -10%; left: -5%; }
-        .white-cloud { width: 500px; height: 500px; background: rgba(240, 249, 255, 0.8); bottom: 10%; right: 5%; }
-        @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(10%, 15%) scale(1.1); } }
-
-        /* 2. SPLASH SCREEN (SACRED) */
-        #splash { position: fixed; inset: 0; background: white; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease-out; }
-        .hop { font-size: 80px; animation: hopAnimation 1.5s infinite ease-in-out; }
-        @keyframes hopAnimation { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
-
-        /* 3. NEON GLOWS (SACRED) */
-        .glow-frame { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(15px); border: 2px solid rgba(59, 130, 246, 0.5); animation: neonPulse 2.5s infinite; transition: all 0.3s ease; }
-        @keyframes neonPulse { 0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.4); } 50% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.7); border-color: #3b82f6; } }
-        .glow-link { color: #3b82f6; font-weight: 800; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); animation: textPulse 2s infinite; cursor: pointer; }
-        @keyframes textPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-
-        /* 4. TERMS PAGE SPECIALS */
-        .legal-scroll { height: 200px; overflow-y: scroll; border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 15px; padding: 15px; background: rgba(255,255,255,0.5); font-size: 12px; }
-        .red-blue-smoke { position: fixed; bottom: -50px; right: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(239, 68, 68, 0.2), rgba(59, 130, 246, 0.2)); filter: blur(50px); z-index: -1; animation: swirl 10s infinite; }
-        @keyframes swirl { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; filter: drop-shadow(0 0 5px #3b82f6); }
-        .fade-out { opacity: 0; pointer-events: none; }
-        .hidden { display: none !important; }
+        body { background: #f8fafc; font-family: 'Inter', sans-serif; color: #334155; line-height: 1.6; }
+        .legal-box { max-width: 800px; margin: 50px auto; background: white; padding: 40px; border-radius: 20px; shadow: 0 10px 30px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
+    <div class="legal-box">
+        <h1 class="text-3xl font-black text-blue-600 mb-6">Jobzzy Global Business Agreement</h1>
+        <p class="mb-4 text-sm text-gray-500">Last Updated: February 2026</p>
+        
+        <section class="mb-8">
+            <h2 class="text-xl font-bold mb-3">1. Non-Refundable Commitment</h2>
+            <p>All payments made for "Brand Verification" (Blue Tick) and "Job Boosting" are final. Since Jobzzy provides instant platform authority and digital visibility, no refunds will be issued under any circumstances, including business closure or accidental purchase.</p>
+        </section>
 
-    <div class="smoke-container">
-        <div class="smoke-cloud blue-cloud"></div>
-        <div class="smoke-cloud white-cloud"></div>
+        <section class="mb-8">
+            <h2 class="text-xl font-bold mb-3">2. Professional Conduct & Anti-Harassment</h2>
+            <p>Brands agree to interact with Job Seekers with the highest level of respect. Any report of rudeness, verbal abuse, or unprofessional behavior toward applicants will lead to an immediate, permanent ban. Jobzzy maintains a "Zero-Tolerance" policy for workplace bullying.</p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-xl font-bold mb-3">3. Global Labor Compliance</h2>
+            <p>By using Jobzzy, you certify that your business abides by the International Labour Organization (ILO) standards. You shall not solicit work from minors, and you must offer fair wages as per your local jurisdiction's laws. You are prohibited from asking for "application fees" from seekers.</p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-xl font-bold mb-3">4. Data Privacy & Security</h2>
+            <p>You are granted access to seeker resumes for hiring purposes only. Sharing, selling, or leaking applicant contact information is a violation of the Global Data Protection Regulation (GDPR). Violators will be prosecuted to the full extent of the law.</p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-xl font-bold mb-3">5. Termination</h2>
+            <p>Jobzzy reserves the right to strip the "Blue Tick" verification from any brand that accumulates more than 3 verified complaints from users regarding the hiring process.</p>
+        </section>
+
+        <button onclick="window.close()" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold">Close Document</button>
     </div>
-    <div id="legal-smoke" class="red-blue-smoke hidden"></div>
-
-    <div id="splash">
-        <div class="hop">💼</div>
-        <h1 class="text-3xl font-bold mt-6 text-blue-600">Welcome to Jobzzy</h1>
-        <p class="text-gray-400 text-sm mt-2 font-medium tracking-widest uppercase">Please wait...</p>
-    </div>
-
-    <nav class="fixed top-0 left-0 w-full p-6 z-20">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
-            <span class="text-3xl">💼</span>
-            <span class="text-2xl font-black text-blue-600 tracking-tighter">Jobzzy</span>
-        </div>
-    </nav>
-
-    <div id="gateway-section" class="flex flex-col items-center justify-center min-h-screen z-10 p-6">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">Good to see you!</h2>
-            <p class="text-slate-500 text-lg">How can we help you grow today?</p>
-        </div>
-        <div class="flex flex-col md:flex-row gap-10">
-            <button onclick="showSection('auth-section')" class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
-                <div id="bldg" class="text-7xl mb-6">🏢</div>
-                <span class="text-2xl font-bold text-slate-800">Hire Talent</span>
-                <p class="text-[10px] text-blue-500 mt-2 font-bold uppercase tracking-widest">For Companies</p>
-            </button>
-            <button class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
-                <div class="text-7xl mb-6 rocket-fly" style="animation: rocketMove 3s infinite ease-in-out;">🚀</div>
-                <span class="text-2xl font-bold text-slate-800">Find a Job</span>
-                <p class="text-[10px] text-blue-500 mt-2 font-bold uppercase tracking-widest">For Seekers</p>
-            </button>
-        </div>
-    </div>
-
-    <div id="auth-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-        <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[40px] w-full max-w-md shadow-2xl">
-            <div id="signup-form">
-                <h2 class="text-3xl font-black text-slate-900 mb-2">Register Brand</h2>
-                <div class="space-y-4 mt-6">
-                    <input type="text" id="reg-name" placeholder="Business Name" class="w-full p-4 rounded-2xl bg-white/60 border border-blue-200 focus:outline-none focus:border-blue-500">
-                    <input type="email" id="reg-email" placeholder="Business Email" class="w-full p-4 rounded-2xl bg-white/60 border border-blue-200">
-                    <input type="password" id="reg-password" placeholder="Create Password" class="w-full p-4 rounded-2xl bg-white/60 border border-blue-200">
-                    <button onclick="handleSignUp()" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg hover:bg-blue-700">Continue</button>
-                </div>
-                <p class="text-center mt-8 text-slate-500 text-sm">Already a brand? <span class="glow-link ml-1" onclick="toggleAuth()">Login</span></p>
-            </div>
-        </div>
-    </div>
-
-    <div id="terms-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-        <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-8 rounded-[40px] w-full max-w-2xl shadow-2xl text-center">
-            
-            <div class="relative w-24 h-24 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                <span class="text-4xl">🏢</span>
-                <div class="absolute -right-1 -bottom-1 bg-white rounded-full p-1 shadow-md">
-                    <span class="text-blue-500 text-xl">✔️</span> </div>
-            </div>
-            <h3 id="display-biz-name" class="text-2xl font-black text-slate-800 mb-6">Your Business Name</h3>
-
-            <div class="legal-scroll text-left text-slate-600 space-y-4 mb-6">
-                <p><strong>1. GLOBAL NO-REFUND POLICY:</strong> Once a Brand Verification fee or Job Boost payment is processed, it is non-refundable. Jobzzy provides immediate digital value and platform access.</p>
-                <p><strong>2. PROFESSIONAL CONDUCT:</strong> You agree to treat all job seekers with dignity. Rudeness, discrimination, or harassment will result in immediate permanent ban without refund.</p>
-                <p><strong>3. DATA PRIVACY:</strong> You may only use applicant data for hiring purposes. Selling or leaking worker data is a violation of international law (GDPR/NDPA).</p>
-                <p><strong>4. TRUTH IN ADVERTISING:</strong> All jobs posted must be real. Posting fake jobs to collect data is strictly prohibited.</p>
-                <p><strong>5. PLATFORM INTEGRITY:</strong> Jobzzy reserves the right to remove any business that fails to maintain a 3-star rating from interviewed candidates.</p>
-            </div>
-
-            <div class="flex items-center justify-center gap-3 mb-8">
-                <input type="checkbox" id="agree-check">
-                <label for="agree-check" class="text-sm font-bold text-slate-700">I agree to the <span class="glow-link">Terms & Conditions</span></label>
-            </div>
-
-            <button onclick="finishOnboarding()" class="w-full bg-blue-600 text-white font-black p-5 rounded-2xl shadow-xl hover:scale-105 transition-all glow-frame" style="animation: neonPulse 2s infinite;">
-                Confirm & Enter Empire
-            </button>
-        </div>
-    </div>
-
-    <script>
-        const SUPABASE_URL = "https://hnfhmlghnqlxgdecoetz.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_-jtctinLpsT0jdHwxPDmVw_Yb2AZTOo";
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // SPLASH TIMER
-        setTimeout(() => { document.getElementById('splash').classList.add('fade-out'); }, 5000);
-
-        function showSection(id) {
-            document.getElementById('gateway-section').classList.add('hidden');
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('terms-section').classList.add('hidden');
-            document.getElementById(id).classList.remove('hidden');
-            if(id === 'terms-section') document.getElementById('legal-smoke').classList.remove('hidden');
-        }
-
-        async function handleSignUp() {
-            const bizName = document.getElementById('reg-name').value;
-            if(!bizName) return alert("Enter business name");
-            document.getElementById('display-biz-name').innerText = bizName;
-            // In real app, we would call supabase.auth.signUp here
-            showSection('terms-section');
-        }
-
-        function finishOnboarding() {
-            if(!document.getElementById('agree-check').checked) {
-                alert("Please agree to the terms to continue.");
-                return;
-            }
-            alert("Welcome to the Empire! Redirecting to Dashboard...");
-        }
-
-        // BUILDING CYCLE
-        setInterval(() => {
-            const b = document.getElementById('bldg');
-            if(b) b.innerHTML = b.innerHTML === '🏢' ? '🏙️' : '🏢';
-        }, 4000);
-    </script>
 </body>
 </html>
