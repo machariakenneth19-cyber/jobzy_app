@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobzzy | Full Gateway</title>
+    <title>Jobzzy | The Empire</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 1. SMOKY BACKGROUND (SACRED) */
+        /* 1. SMOKY BACKGROUND (RESTORED SACRED) */
         body { margin: 0; background: #ffffff; height: 100vh; overflow: hidden; font-family: 'Inter', sans-serif; }
         .smoke-container { position: fixed; width: 100%; height: 100%; z-index: -1; filter: blur(70px); }
         .smoke-cloud { position: absolute; border-radius: 50%; animation: drift 15s infinite alternate ease-in-out; }
@@ -15,19 +15,17 @@
         .white-cloud { width: 500px; height: 500px; background: rgba(240, 249, 255, 0.8); bottom: 10%; right: 5%; }
         @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(10%, 15%) scale(1.1); } }
 
-        /* 2. SPLASH SCREEN (SACRED) */
+        /* 2. SPLASH SCREEN (RESTORED SACRED) */
         #splash { position: fixed; inset: 0; background: white; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease-out; }
         .hop { font-size: 80px; animation: hopAnimation 1.5s infinite ease-in-out; }
         @keyframes hopAnimation { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
 
-        /* 3. NEON GLOWS (SACRED) */
+        /* 3. NEON GLOWS */
         .glow-frame { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(15px); border: 2px solid rgba(59, 130, 246, 0.5); animation: neonPulse 2.5s infinite; transition: all 0.3s ease; }
         @keyframes neonPulse { 0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.4); } 50% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.7); border-color: #3b82f6; } }
         .glow-link { color: #3b82f6; font-weight: 800; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); animation: textPulse 2s infinite; cursor: pointer; }
-        .glow-clickable { color: #3b82f6; font-weight: 800; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); animation: pulseText 1.5s infinite; cursor: pointer; text-decoration: underline; }
-        @keyframes pulseText { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.02); } }
-
-        /* 4. VERIFIED BADGE (BITTEN STAR) */
+        
+        /* 4. THE BITTEN STAR VERIFIED BADGE */
         .verified-badge {
             width: 18px; height: 18px; background-color: #0095f6; position: relative;
             clip-path: polygon(50% 0%, 61% 10%, 75% 10%, 80% 24%, 94% 25%, 90% 39%, 100% 50%, 90% 61%, 94% 75%, 80% 76%, 75% 90%, 61% 90%, 50% 100%, 39% 90%, 25% 90%, 20% 76%, 6% 75%, 10% 61%, 0% 50%, 10% 39%, 6% 25%, 20% 24%, 25% 10%, 39% 10%);
@@ -35,19 +33,20 @@
         }
         .verified-badge::after { content: '✓'; color: white; font-size: 10px; font-weight: bold; }
 
-        /* 5. DASHBOARD SPECIFICS */
-        #dashboard-section { height: 100vh; overflow-y: auto; background: rgba(255,255,255,0.4); backdrop-filter: blur(10px); }
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: white; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding: 15px; z-index: 50; }
-        .profile-hero-circle { width: 150px; height: 150px; border-radius: 50%; background: #e2e8f0; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; margin: 20px auto; position: relative; cursor: pointer; }
-        .home-rectangle { width: 90%; height: 200px; background: rgba(59, 130, 246, 0.1); border-radius: 30px; border: 2px dashed rgba(59, 130, 246, 0.3); margin: 20px auto; display: flex; align-items: center; justify-content: center; }
+        /* 5. MAGICAL DASHBOARD UI */
+        #dashboard-section { height: 100vh; overflow-y: scroll; scroll-behavior: smooth; }
+        .nav-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.5); border-radius: 30px; display: flex; justify-content: space-around; padding: 15px; z-index: 100; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .nav-icon { font-size: 24px; transition: transform 0.3s; }
+        .nav-icon:hover { transform: scale(1.2) translateY(-5px); }
         
-        /* 6. MODALS & SETTINGS */
-        #terms-modal, #privacy-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 500px; padding: 40px; border-radius: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+        .post-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid white; border-radius: 35px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+        
+        .profile-trigger { border: 2px solid #3b82f6; padding: 2px; border-radius: 50%; animation: borderRotate 4s linear infinite; }
+        @keyframes borderRotate { 0% { border-color: #3b82f6; } 50% { border-color: #60a5fa; } 100% { border-color: #3b82f6; } }
 
+        #privacy-modal { position: fixed; inset: 0; background: rgba(255,255,255,0.1); backdrop-filter: blur(25px); z-index: 200; display: none; align-items: center; justify-content: center; }
         .hidden { display: none !important; }
         .fade-out { opacity: 0; pointer-events: none; }
-        input, select { background: rgba(255, 255, 255, 0.6) !important; border: 1px solid rgba(59, 130, 246, 0.2) !important; }
     </style>
 </head>
 <body>
@@ -59,13 +58,13 @@
 
     <div id="splash">
         <div class="hop">💼</div>
-        <h1 class="text-3xl font-bold mt-6 text-blue-600">Welcome to Jobzzy</h1>
-        <p class="text-gray-400 text-sm mt-2 font-medium tracking-widest uppercase">Please wait...</p>
+        <h1 class="text-3xl font-black mt-6 text-blue-600">Jobzzy</h1>
+        <p class="text-gray-400 text-xs mt-2 font-bold tracking-[0.3em] uppercase">The Future is Here</p>
     </div>
 
     <div id="entrance-wrap">
-        <nav class="fixed top-0 left-0 w-full p-6 z-20">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
+        <nav class="fixed top-0 left-0 w-full p-8 z-20">
+            <div class="flex items-center gap-2">
                 <span class="text-3xl">💼</span>
                 <span class="text-2xl font-black text-blue-600 tracking-tighter">Jobzzy</span>
             </div>
@@ -73,120 +72,143 @@
 
         <div id="gateway-section" class="flex flex-col items-center justify-center min-h-screen z-10 p-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">Good to see you!</h2>
-                <p class="text-slate-500 text-lg">How can we help you grow today?</p>
+                <h2 class="text-5xl font-black text-slate-900 mb-4 tracking-tight">Expand your Empire.</h2>
+                <p class="text-slate-500 text-lg">Choose your path today.</p>
             </div>
             <div class="flex flex-col md:flex-row gap-10">
-                <button onclick="showSection('auth-section')" class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
+                <button onclick="showSection('auth-section')" class="glow-frame p-12 rounded-[50px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105 transition-transform">
                     <div id="bldg" class="text-7xl mb-6">🏢</div>
-                    <span class="text-2xl font-bold text-slate-800">Hire Talent</span>
+                    <span class="text-2xl font-black text-slate-800">Hire Talent</span>
+                    <p class="text-[10px] text-blue-500 mt-2 font-bold uppercase tracking-widest">For Companies</p>
                 </button>
-                <button class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
+                <button class="glow-frame p-12 rounded-[50px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105 transition-transform">
                     <div class="text-7xl mb-6" style="animation: hopAnimation 2s infinite ease-in-out;">🚀</div>
-                    <span class="text-2xl font-bold text-slate-800">Find a Job</span>
+                    <span class="text-2xl font-black text-slate-800">Find a Job</span>
+                    <p class="text-[10px] text-blue-500 mt-2 font-bold uppercase tracking-widest">For Seekers</p>
                 </button>
             </div>
         </div>
 
         <div id="auth-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-            <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[40px] w-full max-w-md shadow-2xl text-center">
+            <div class="bg-white/40 backdrop-blur-3xl border-2 border-white/70 p-10 rounded-[50px] w-full max-w-md shadow-2xl">
                 <div id="signup-form">
-                    <h2 class="text-3xl font-black text-slate-900 mb-2">Register Brand</h2>
-                    <div class="space-y-4 mt-6">
-                        <input type="text" id="reg-name" placeholder="Business Name" class="w-full p-4 rounded-2xl">
-                        <input type="email" id="reg-email" placeholder="Business Email" class="w-full p-4 rounded-2xl">
-                        <select id="reg-size" class="w-full p-4 rounded-2xl text-slate-500">
+                    <h2 class="text-3xl font-black text-slate-900">Register Brand</h2>
+                    <div class="space-y-4 mt-8">
+                        <input type="text" id="reg-name" placeholder="Business Name" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100 focus:ring-2 focus:ring-blue-400 outline-none">
+                        <input type="email" id="reg-email" placeholder="Business Email" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100">
+                        <select id="reg-size" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100 text-slate-500 bg-white/60">
                             <option value="">Team Size (Workers)</option>
                             <option value="1-10">1 - 10 Workers</option>
-                            <option value="11-50">11 - 50 Workers</option>
                             <option value="50+">50+ Workers</option>
                         </select>
-                        <input type="password" id="reg-pass" placeholder="Create Password" class="w-full p-4 rounded-2xl">
-                        <button onclick="goToAgreement()" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Continue</button>
+                        <input type="password" placeholder="Create Password" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100">
+                        <button onclick="goToAgreement()" class="w-full bg-blue-600 text-white font-black p-5 rounded-3xl mt-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)]">Continue</button>
                     </div>
+                    <p class="text-center mt-8 text-slate-400 text-sm">Already a brand? <span class="glow-link ml-1" onclick="toggleAuth()">Login</span></p>
                 </div>
             </div>
         </div>
 
         <div id="agreement-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-            <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[45px] w-full max-w-md text-center">
-                <div class="flex items-center justify-center gap-3 mb-8 p-4 bg-white/50 rounded-3xl border border-white">
-                    <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">👤</div>
-                    <h3 id="preview-name" class="font-black text-slate-800">Business Name</h3>
+            <div class="bg-white/40 backdrop-blur-3xl border-2 border-white/70 p-10 rounded-[50px] w-full max-w-md text-center">
+                <div class="flex items-center justify-center gap-3 mb-12 p-5 bg-white/60 rounded-[30px] border border-white">
+                    <div class="w-14 h-14 bg-slate-200 rounded-full flex items-center justify-center text-xl">👤</div>
+                    <h3 id="preview-name" class="font-black text-slate-800 text-xl">Brand Name</h3>
                     <div class="verified-badge"></div>
                 </div>
-                <div class="flex items-start gap-3 text-left mb-10">
-                    <input type="checkbox" id="agree-check" class="mt-1 w-5 h-5 accent-blue-600">
-                    <label for="agree-check" class="text-sm font-medium">I agree to the <span class="glow-clickable" onclick="toggleModal('terms-modal', true)">Terms & Conditions</span></label>
+                <div class="flex items-start gap-3 text-left mb-10 px-4">
+                    <input type="checkbox" id="agree-check" class="mt-1 w-6 h-6 accent-blue-600 rounded-lg">
+                    <label for="agree-check" class="text-sm font-bold text-slate-600">I agree to the <span class="glow-clickable">Terms & Conditions</span></label>
                 </div>
-                <button onclick="enterDashboard()" id="continue-btn" class="hidden w-full bg-blue-600 text-white font-black p-5 rounded-2xl shadow-xl glow-frame">Continue</button>
+                <button onclick="enterDashboard()" id="continue-btn" class="hidden w-full bg-blue-600 text-white font-black p-6 rounded-[30px] shadow-xl glow-frame">Continue</button>
             </div>
         </div>
     </div>
 
     <div id="dashboard-section" class="hidden">
-        <header class="p-6 flex items-center justify-between sticky top-0 bg-white/60 backdrop-blur-md z-30">
-            <div class="flex items-center gap-3">
-                <button onclick="openPrivacy()" class="text-2xl p-2 bg-white rounded-xl shadow-sm border border-blue-100">⋮</button>
-                <div class="flex items-center gap-1">
-                    <span id="dash-biz-name" class="font-black text-slate-800 text-lg">Brand</span>
+        <header class="p-8 flex items-center justify-between sticky top-0 bg-white/40 backdrop-blur-xl z-[110]">
+            <div class="flex items-center gap-4">
+                <button onclick="openPrivacy()" class="text-3xl hover:rotate-90 transition-transform">⋮</button>
+                <div class="flex items-center gap-2">
+                    <span id="dash-biz-name" class="font-black text-slate-900 text-2xl tracking-tighter">Brand</span>
                     <div class="verified-badge"></div>
                 </div>
             </div>
-            <div onclick="showProfilePage()" class="w-10 h-10 bg-gray-200 rounded-full border-2 border-white shadow-sm overflow-hidden cursor-pointer">
-                <span class="flex items-center justify-center h-full text-xs">👤</span>
+            <div onclick="showSection('agreement-section')" class="profile-trigger cursor-pointer">
+                <div class="w-12 h-12 bg-slate-100 rounded-full overflow-hidden flex items-center justify-center text-2xl">👤</div>
             </div>
         </header>
 
-        <main class="pb-32 px-6">
-            <div class="profile-hero-circle" onclick="document.getElementById('file-upload').click()">
-                <span class="text-5xl text-gray-300">👤</span>
-                <input type="file" id="file-upload" class="hidden" accept="image/*">
-            </div>
-            <p class="text-center text-blue-500 font-bold mb-6" onclick="document.getElementById('file-upload').click()">Upload Profile Picture</p>
-            
-            <div class="home-rectangle">
-                <p class="text-slate-400 font-medium">Post a Job Talent Here</p>
+        <main class="max-w-2xl mx-auto pb-40 px-6">
+            <div class="relative w-full h-72 rounded-[50px] bg-gradient-to-br from-blue-50 to-white border-2 border-white shadow-inner mb-12 flex flex-col items-center justify-center group overflow-hidden">
+                <div class="absolute inset-0 bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="w-32 h-32 bg-white rounded-full shadow-2xl flex items-center justify-center text-6xl mb-4 group-hover:scale-110 transition-transform">👤</div>
+                <button class="text-blue-600 font-black text-sm uppercase tracking-widest">Update Identity</button>
             </div>
 
-            <div class="space-y-6 mt-10">
-                <div class="h-40 bg-white/60 rounded-3xl border border-white"></div>
-                <div class="h-40 bg-white/60 rounded-3xl border border-white"></div>
-                <div class="h-40 bg-white/60 rounded-3xl border border-white"></div>
+            <div class="space-y-8">
+                <div class="post-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full"></div>
+                        <div>
+                            <p class="font-black text-slate-800">Jobzzy Assistant</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">System Update</p>
+                        </div>
+                    </div>
+                    <div class="h-48 w-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-[30px] mb-6 flex items-center justify-center">
+                        <h4 class="text-white font-black text-2xl">Welcome to your Empire</h4>
+                    </div>
+                    <div class="flex gap-6 px-2">
+                        <button class="flex items-center gap-2 text-rose-500 font-bold"><span class="text-xl">❤️</span> 1.2k</button>
+                        <button class="flex items-center gap-2 text-slate-400 font-bold"><span class="text-xl">💬</span> 48</button>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full"></div>
+                        <p class="font-black text-slate-800">Talent Search</p>
+                    </div>
+                    <p class="text-slate-600 mb-6 font-medium leading-relaxed">Your brand is now verified. Start posting jobs to find the best workers in the world.</p>
+                    <div class="flex gap-6 px-2">
+                        <button class="flex items-center gap-2 text-rose-500 font-bold"><span class="text-xl">❤️</span> 850</button>
+                        <button class="flex items-center gap-2 text-slate-400 font-bold"><span class="text-xl">💬</span> 12</button>
+                    </div>
+                </div>
             </div>
         </main>
 
         <nav class="nav-bar">
-            <button class="text-blue-600 text-3xl">🏠</button> <button class="text-slate-400 text-3xl">💬</button> <button class="text-yellow-500 text-3xl">🔔</button> </nav>
+            <button class="nav-icon" title="Home">🏠</button>
+            <button class="nav-icon" title="Messages">💬</button>
+            <button class="nav-icon" title="Notifications">🔔</button>
+            <button class="nav-icon text-rose-500" title="Likes">❤️</button>
+        </nav>
     </div>
 
     <div id="privacy-modal">
-        <div class="modal-content relative">
-            <button onclick="toggleModal('privacy-modal', false)" class="absolute top-6 left-6 text-blue-600 font-bold glow-link">← Go Back</button>
-            <h2 class="text-2xl font-black mt-10 mb-8">Account Privacy</h2>
-            <div class="space-y-6">
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase">Business Name</label>
-                    <p id="priv-name" class="text-slate-800 font-bold border-b pb-2">Business Name</p>
+        <div class="modal-content relative bg-white/90 backdrop-blur-2xl border-2 border-white">
+            <button onclick="toggleModal('privacy-modal', false)" class="absolute top-10 left-10 text-blue-600 font-black flex items-center gap-2">
+                <span class="text-2xl">←</span> Go Back
+            </button>
+            <div class="mt-20">
+                <h2 class="text-4xl font-black text-slate-900 mb-10 tracking-tighter">Privacy Control</h2>
+                <div class="space-y-8">
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Business Handle</label>
+                        <p id="priv-name" class="text-xl font-black text-slate-800">Brand Name</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Secure Email</label>
+                        <p id="priv-email" class="text-xl font-black text-slate-800">admin@brand.com</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Secret Password</label>
+                        <p class="text-xl font-black text-slate-800 tracking-widest">••••••••</p>
+                    </div>
+                    <button class="w-full bg-slate-900 text-white p-6 rounded-[30px] font-black shadow-2xl">Change Password</button>
                 </div>
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase">Email Address</label>
-                    <p id="priv-email" class="text-slate-800 font-bold border-b pb-2">email@business.com</p>
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase">Password</label>
-                    <p class="text-slate-800 font-bold border-b pb-2">••••••••••••</p>
-                </div>
-                <button class="w-full py-4 bg-blue-50 rounded-2xl text-blue-600 font-bold border border-blue-200 mt-4">Change Password</button>
             </div>
-        </div>
-    </div>
-
-    <div id="terms-modal">
-        <div class="modal-content">
-            <h1 class="text-2xl font-black text-blue-600 mb-4">Terms & Conditions</h1>
-            <p class="text-slate-600 text-sm">You agree to follow all global labor laws and treat workers with respect...</p>
-            <button onclick="toggleModal('terms-modal', false)" class="mt-8 w-full bg-slate-900 text-white p-4 rounded-2xl font-bold">Close</button>
         </div>
     </div>
 
@@ -200,25 +222,19 @@
 
         function toggleAuth() {
             document.getElementById('signup-form').classList.toggle('hidden');
-            document.getElementById('login-form').classList.toggle('hidden');
         }
 
         function goToAgreement() {
-            const name = document.getElementById('reg-name').value || "Brand";
+            const name = document.getElementById('reg-name').value || "Elite Brand";
             document.getElementById('preview-name').innerText = name;
             document.getElementById('dash-biz-name').innerText = name;
             document.getElementById('priv-name').innerText = name;
-            document.getElementById('priv-email').innerText = document.getElementById('reg-email').value;
+            document.getElementById('priv-email').innerText = document.getElementById('reg-email').value || "admin@jobzzy.com";
             showSection('agreement-section');
         }
 
         function toggleModal(id, show) { document.getElementById(id).style.display = show ? 'flex' : 'none'; }
-
-        function enterDashboard() {
-            document.getElementById('entrance-wrap').classList.add('hidden');
-            showSection('dashboard-section');
-        }
-
+        function enterDashboard() { document.getElementById('entrance-wrap').classList.add('hidden'); showSection('dashboard-section'); }
         function openPrivacy() { toggleModal('privacy-modal', true); }
 
         document.getElementById('agree-check').addEventListener('change', function() {
