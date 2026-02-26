@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 1. SMOKY BACKGROUND (SACRED - UNTOUCHED) */
+        /* 1. SMOKY BACKGROUND (SACRED) */
         body { margin: 0; background: #ffffff; height: 100vh; overflow: hidden; font-family: 'Inter', sans-serif; }
         .smoke-container { position: fixed; width: 100%; height: 100%; z-index: -1; filter: blur(70px); }
         .smoke-cloud { position: absolute; border-radius: 50%; animation: drift 15s infinite alternate ease-in-out; }
@@ -15,16 +15,14 @@
         .white-cloud { width: 500px; height: 500px; background: rgba(240, 249, 255, 0.8); bottom: 10%; right: 5%; }
         @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(10%, 15%) scale(1.1); } }
 
-        /* 2. SPLASH SCREEN (SACRED - UNTOUCHED) */
+        /* 2. GHOSTING SPLASH SCREEN */
         #splash { position: fixed; inset: 0; background: white; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease-out; }
         .hop { font-size: 80px; animation: hopAnimation 1.5s infinite ease-in-out; }
         @keyframes hopAnimation { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+        .ghost-text { font-size: 18px; font-weight: 700; color: #3b82f6; opacity: 0; animation: ghosting 1s infinite; margin-top: 20px; }
+        @keyframes ghosting { 0% { opacity: 0; transform: translateY(5px); } 50% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-5px); } }
 
-        /* 3. NEON GLOWS */
-        .glow-frame { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(15px); border: 2px solid rgba(59, 130, 246, 0.5); animation: neonPulse 2.5s infinite; }
-        @keyframes neonPulse { 0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.4); } 50% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.7); border-color: #3b82f6; } }
-
-        /* 4. VERIFIED BADGE */
+        /* 3. VERIFIED BADGE & HEART SMOKE */
         .verified-badge {
             width: 16px; height: 16px; background-color: #0095f6;
             clip-path: polygon(50% 0%, 61% 10%, 75% 10%, 80% 24%, 94% 25%, 90% 39%, 100% 50%, 90% 61%, 94% 75%, 80% 76%, 75% 90%, 61% 90%, 50% 100%, 39% 90%, 25% 90%, 20% 76%, 6% 75%, 10% 61%, 0% 50%, 10% 39%, 6% 25%, 20% 24%, 25% 10%, 39% 10%);
@@ -32,17 +30,23 @@
         }
         .verified-badge::after { content: '✓'; color: white; font-size: 9px; font-weight: bold; }
 
-        /* 5. FACEBOOK STYLE LAYOUT */
-        #dashboard-section { height: 100vh; overflow-y: scroll; background: #f0f2f5; }
-        .fb-header { position: sticky; top: 0; background: white; border-bottom: 1px solid #ddd; z-index: 110; padding: 10px 15px; }
-        .story-container { display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; scrollbar-width: none; }
-        .story-card { min-width: 110px; height: 180px; border-radius: 15px; background: #ddd; position: relative; overflow: hidden; flex-shrink: 0; border: 1px solid #e0e0e0; }
-        .story-avatar { position: absolute; top: 10px; left: 10px; width: 35px; height: 35px; border-radius: 50%; border: 3px solid #3b82f6; background: white; }
-        
-        .post-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; }
-        .post-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; color: #65676b; font-weight: 600; font-size: 14px; }
-        .post-btn:hover { background: #f2f2f2; border-radius: 5px; }
+        .heart-smoke { position: absolute; pointer-events: none; animation: smokeFloat 2s forwards; color: #f43f5e; font-size: 20px; opacity: 0.8; }
+        @keyframes smokeFloat { 
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-60px) scale(1.5) rotate(20deg); opacity: 0; filter: blur(4px); }
+        }
 
+        /* 4. DASHBOARD STRUCTURES */
+        #dashboard-section { height: 100vh; overflow-y: scroll; background: #f0f2f5; }
+        .fb-header { position: sticky; top: 0; background: white; border-bottom: 1px solid #ddd; z-index: 110; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-struct { width: 28px; height: 28px; cursor: pointer; transition: 0.3s; }
+        .nav-struct:hover { transform: scale(1.1); }
+        
+        .story-container { display: flex; gap: 10px; overflow-x: auto; padding: 15px; scrollbar-width: none; }
+        .story-card { min-width: 110px; height: 180px; border-radius: 15px; background: #ddd; position: relative; overflow: hidden; flex-shrink: 0; }
+        
+        .post-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; border: 1px solid #ddd; position: relative; }
+        
         .hidden { display: none !important; }
         .fade-out { opacity: 0; pointer-events: none; }
     </style>
@@ -56,143 +60,72 @@
 
     <div id="splash">
         <div class="hop">💼</div>
-        <h1 class="text-3xl font-black mt-6 text-blue-600">Jobzzy</h1>
-        <p class="text-gray-400 text-xs mt-2 font-bold tracking-[0.3em] uppercase">Enterprise Portal</p>
+        <h1 class="text-4xl font-black mt-4 text-blue-600">Jobzzy</h1>
+        <div id="motivator" class="ghost-text">Loading...</div>
     </div>
 
     <div id="entrance-wrap">
         <nav class="fixed top-0 left-0 w-full p-8 z-20">
-            <div class="flex items-center gap-2">
-                <span class="text-3xl">💼</span>
-                <span class="text-2xl font-black text-blue-600 tracking-tighter">Jobzzy</span>
-            </div>
+            <div class="flex items-center gap-2"><span class="text-3xl">💼</span><span class="text-2xl font-black text-blue-600">Jobzzy</span></div>
         </nav>
-
         <div id="gateway-section" class="flex flex-col items-center justify-center min-h-screen z-10 p-6">
-            <div class="text-center mb-16">
-                <h2 class="text-5xl font-black text-slate-900 mb-4 tracking-tight">Expand your Empire.</h2>
-                <p class="text-slate-500 text-lg">Choose your path today.</p>
-            </div>
             <div class="flex flex-col md:flex-row gap-10">
-                <button onclick="showSection('auth-section')" class="glow-frame p-12 rounded-[50px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105 transition-transform">
+                <button onclick="showSection('auth-section')" class="bg-white/30 backdrop-blur-xl p-12 rounded-[50px] w-72 h-80 border-2 border-blue-400/50 flex flex-col items-center justify-center shadow-xl">
                     <div id="bldg" class="text-7xl mb-6">🏢</div>
-                    <span class="text-2xl font-black text-slate-800">Hire Talent</span>
-                    <p class="text-[10px] text-blue-500 mt-2 font-bold uppercase tracking-widest">For Companies</p>
+                    <span class="text-2xl font-black">Hire Talent</span>
+                    <p class="text-[10px] text-blue-500 font-bold mt-2 uppercase">For Companies</p>
                 </button>
-                <button class="glow-frame p-12 rounded-[50px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105 transition-transform">
-                    <div class="text-7xl mb-6" style="animation: hopAnimation 2s infinite ease-in-out;">🚀</div>
-                    <span class="text-2xl font-black text-slate-800">Find a Job</span>
-                    <p class="text-[10px] text-blue-500 mt-2 font-bold uppercase tracking-widest">For Seekers</p>
+                <button class="bg-white/30 backdrop-blur-xl p-12 rounded-[50px] w-72 h-80 border-2 border-blue-400/50 flex flex-col items-center justify-center shadow-xl">
+                    <div class="text-7xl mb-6">🚀</div>
+                    <span class="text-2xl font-black">Find a Job</span>
+                    <p class="text-[10px] text-blue-500 font-bold mt-2 uppercase">For Seekers</p>
                 </button>
-            </div>
-        </div>
-
-        <div id="auth-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-            <div class="bg-white/40 backdrop-blur-3xl border-2 border-white/70 p-10 rounded-[50px] w-full max-w-md shadow-2xl">
-                <h2 class="text-3xl font-black text-slate-900">Register Brand</h2>
-                <div class="space-y-4 mt-8">
-                    <input type="text" id="reg-name" placeholder="Business Name" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100">
-                    <input type="email" id="reg-email" placeholder="Business Email" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100">
-                    <select id="reg-size" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100 bg-white/60">
-                        <option value="">Team Size (Workers)</option>
-                        <option value="1-10">1 - 10 Workers</option>
-                        <option value="50+">50+ Workers</option>
-                    </select>
-                    <input type="password" placeholder="Create Password" class="w-full p-5 rounded-3xl border-none ring-1 ring-blue-100">
-                    <button onclick="goToAgreement()" class="w-full bg-blue-600 text-white font-black p-5 rounded-3xl mt-4 shadow-xl">Continue</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="agreement-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-            <div class="bg-white/40 backdrop-blur-3xl border-2 border-white/70 p-10 rounded-[50px] w-full max-w-md text-center">
-                <div class="flex items-center justify-center gap-3 mb-12 p-5 bg-white/60 rounded-[30px] border border-white">
-                    <div class="w-14 h-14 bg-slate-200 rounded-full flex items-center justify-center">👤</div>
-                    <h3 id="preview-name" class="font-black text-slate-800 text-xl">Brand Name</h3>
-                    <div class="verified-badge"></div>
-                </div>
-                <div class="flex items-start gap-3 text-left mb-10 px-4">
-                    <input type="checkbox" id="agree-check" class="mt-1 w-6 h-6 accent-blue-600">
-                    <label for="agree-check" class="text-sm font-bold text-slate-600">I agree to the <span class="text-blue-600 underline cursor-pointer" onclick="toggleModal('terms-modal', true)">Terms & Conditions</span></label>
-                </div>
-                <button onclick="enterDashboard()" id="continue-btn" class="hidden w-full bg-blue-600 text-white font-black p-6 rounded-[30px] shadow-xl">Continue</button>
             </div>
         </div>
     </div>
 
     <div id="dashboard-section" class="hidden">
-        <header class="fb-header flex items-center justify-between">
-            <h1 class="text-2xl font-black text-blue-600 tracking-tighter">Jobzzy</h1>
-            <div class="flex gap-4">
-                <button onclick="openPrivacy()" class="p-2 bg-gray-100 rounded-full text-xl">🏠</button>
-                <button class="p-2 bg-gray-100 rounded-full text-xl">💬</button>
-                <button class="p-2 bg-gray-100 rounded-full text-xl">🔔</button>
-                <button onclick="openPrivacy()" class="p-2 bg-gray-100 rounded-full text-xl">⋮</button>
+        <header class="fb-header">
+            <h1 class="text-2xl font-black text-blue-600">Jobzzy</h1>
+            <div class="flex items-center gap-6">
+                <svg class="nav-struct text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> <svg class="nav-struct text-yellow-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> <svg class="nav-struct text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <button onclick="openPrivacy()" class="font-black text-gray-400">⋮</button>
             </div>
         </header>
 
-        <main class="max-w-xl mx-auto pb-20">
-            <div class="story-container px-4">
-                <div class="story-card bg-slate-300">
-                    <div class="story-avatar">👤</div>
-                    <div class="absolute bottom-2 left-2 text-[10px] font-black text-white">Your Brand</div>
-                </div>
-                <div class="story-card bg-blue-500">
-                    <div class="story-avatar">🏗️</div>
-                    <div class="absolute bottom-2 left-2 text-[10px] font-black text-white">Tesla Corp</div>
-                </div>
-                <div class="story-card bg-indigo-600">
-                    <div class="story-avatar">📱</div>
-                    <div class="absolute bottom-2 left-2 text-[10px] font-black text-white">Apple Inc</div>
-                </div>
-                <div class="story-card bg-green-500">
-                    <div class="story-avatar">☕</div>
-                    <div class="absolute bottom-2 left-2 text-[10px] font-black text-white">Starbucks</div>
-                </div>
-                <div class="story-card bg-orange-500">
-                    <div class="story-avatar">🍔</div>
-                    <div class="absolute bottom-2 left-2 text-[10px] font-black text-white">McDonald's</div>
-                </div>
+        <main class="max-w-xl mx-auto">
+            <div class="story-container">
+                <div class="story-card bg-slate-800 flex items-center justify-center text-white font-bold text-xs">AD: TESLA</div>
+                <div class="story-card bg-blue-900 flex items-center justify-center text-white font-bold text-xs">AD: SPACE X</div>
+                <div class="story-card bg-black flex items-center justify-center text-white font-bold text-xs">AD: APPLE</div>
             </div>
 
-            <div class="post-card mb-4 flex gap-3">
-                <div class="w-10 h-10 bg-slate-200 rounded-full flex-shrink-0"></div>
-                <button class="w-full bg-gray-100 rounded-full text-left px-5 text-gray-500 text-sm font-medium">Post a New Job Opening...</button>
-            </div>
-
-            <div id="job-feed" class="space-y-4">
+            <div id="job-feed" class="px-4 pb-20">
                 </div>
         </main>
     </div>
 
-    <div id="privacy-modal" class="hidden fixed inset-0 z-[200] bg-white flex flex-col">
-        <header class="p-6 border-bottom">
-            <button onclick="toggleModal('privacy-modal', false)" class="px-6 py-2 bg-blue-600 text-white font-black rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.5)]">← Go Back</button>
-        </header>
-        <div class="p-10">
-            <h2 class="text-4xl font-black mb-10">Account Settings</h2>
-            <div class="space-y-6">
-                <div class="p-5 bg-gray-50 rounded-2xl"><label class="block text-xs font-bold text-gray-400">BUSINESS NAME</label><p id="priv-name" class="font-bold text-lg">Name</p></div>
-                <div class="p-5 bg-gray-50 rounded-2xl"><label class="block text-xs font-bold text-gray-400">EMAIL</label><p id="priv-email" class="font-bold text-lg">Email</p></div>
-                <div class="p-5 bg-gray-50 rounded-2xl"><label class="block text-xs font-bold text-gray-400">PASSWORD</label><p class="font-bold text-lg">••••••••</p></div>
-            </div>
+    <div id="privacy-modal" class="hidden fixed inset-0 z-[200] bg-white p-10">
+        <button onclick="toggleModal('privacy-modal', false)" class="bg-blue-600 text-white p-3 rounded-xl shadow-[0_0_15px_blue]">← Go Back</button>
+        <div class="mt-10 space-y-4">
+            <p id="priv-name" class="font-black text-2xl border-b pb-2">Business Name</p>
+            <p id="priv-email" class="text-gray-500">email@brand.com</p>
         </div>
     </div>
 
     <script>
-        const _supabase = supabase.createClient("https://hnfhmlghnqlxgdecoetz.supabase.co", "sb_publishable_-jtctinLpsT0jdHwxPDmVw_Yb2AZTOo");
+        // SPLASH GHOSTING LOGIC
+        const words = ["Loading...", "Ready to unlock your future?", "Welcome back...", "Don't give up...", "Building Empires.", "Your Vision, Our Mission.", "The Professional standard."];
+        let wIdx = 0;
+        setInterval(() => {
+            const el = document.getElementById('motivator');
+            if(el) { el.innerText = words[wIdx]; wIdx = (wIdx + 1) % words.length; }
+        }, 1000);
+
+        setTimeout(() => { document.getElementById('splash').classList.add('fade-out'); }, 7000);
 
         function showSection(id) {
-            document.querySelectorAll('#gateway-section, #auth-section, #agreement-section, #dashboard-section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('#gateway-section, #dashboard-section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
-        }
-
-        function goToAgreement() {
-            const name = document.getElementById('reg-name').value || "Elite Brand";
-            document.getElementById('preview-name').innerText = name;
-            document.getElementById('priv-name').innerText = name;
-            document.getElementById('priv-email').innerText = document.getElementById('reg-email').value || "admin@brand.com";
-            showSection('agreement-section');
         }
 
         function enterDashboard() {
@@ -201,56 +134,60 @@
             generate30Posts();
         }
 
-        function toggleModal(id, show) { 
-            if(show) document.getElementById(id).classList.remove('hidden');
-            else document.getElementById(id).classList.add('hidden');
-        }
-
-        function openPrivacy() { toggleModal('privacy-modal', true); }
-
-        // GENERATE 30 POSTS LOGIC
         function generate30Posts() {
             const feed = document.getElementById('job-feed');
-            const names = ["John Doe", "Sarah Kamau", "Mike Chen", "Anna Smith", "David Ochieng"];
-            const skills = ["Software Engineer", "Graphic Designer", "Civil Engineer", "Accountant", "Sales Manager"];
+            const bizName = document.getElementById('reg-name')?.value || "Your Brand";
             
             for(let i=1; i<=30; i++) {
-                const name = names[i % 5];
-                const skill = skills[i % 5];
-                const likes = Math.floor(Math.random() * 500);
-                
                 feed.innerHTML += `
-                <div class="post-card shadow-sm">
-                    <div class="flex items-center gap-2 mb-3">
-                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">${name[0]}</div>
-                        <div>
-                            <p class="font-bold text-sm text-slate-900">${name} <span class="text-blue-500 font-medium">seeking ${skill} role</span></p>
-                            <p class="text-[10px] text-gray-400">Just now • 🌍</p>
+                <div class="mb-4">
+                    <div class="bg-white p-3 rounded-t-xl flex items-center justify-between border-x border-t border-gray-200">
+                         <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-[10px] text-white font-bold">${bizName[0]}</div>
+                            <span class="font-black text-xs text-slate-800 uppercase tracking-tighter">${bizName}</span>
+                            <div class="verified-badge"></div>
+                         </div>
+                         <span class="text-[10px] font-bold text-blue-500">Are you interested in this role?</span>
+                    </div>
+                    <div class="post-card rounded-t-none">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-gray-200 rounded-lg"></div>
+                            <div><p class="font-bold text-sm">Job Seeker #${i}</p><p class="text-[10px] text-gray-400">Software Talent</p></div>
                         </div>
-                    </div>
-                    <p class="text-sm text-gray-700 mb-4">Hello everyone! I am a professional ${skill} with 5 years of experience looking for new opportunities. Please check my profile!</p>
-                    <div class="flex items-center justify-between py-2 border-t border-b border-gray-100 mb-1">
-                        <div class="flex items-center gap-1 text-xs text-gray-500">👍 ${likes}</div>
-                        <div class="flex gap-2 text-xs text-gray-500"><span>12 Comments</span><span>5 Shares</span></div>
-                    </div>
-                    <div class="flex">
-                        <button class="post-btn">👍 Like</button>
-                        <button class="post-btn">💬 Comment</button>
-                        <button class="post-btn">↗️ Share</button>
+                        <p class="text-sm text-gray-600 mb-4">I am looking for a professional position in your company. I have 4 years of experience.</p>
+                        <div class="flex gap-4 border-t pt-3">
+                            <button onclick="spawnHearts(this)" class="flex items-center gap-1 text-gray-500 font-bold text-xs relative">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> 
+                                Love
+                            </button>
+                            <button class="text-gray-500 font-bold text-xs">💬 Comment</button>
+                            <button class="text-gray-500 font-bold text-xs">↗️ Share</button>
+                        </div>
                     </div>
                 </div>`;
             }
         }
 
-        document.getElementById('agree-check').addEventListener('change', function() {
-            document.getElementById('continue-btn').classList.toggle('hidden', !this.checked);
-        });
+        function spawnHearts(btn) {
+            for(let i=0; i<4; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-smoke';
+                heart.innerHTML = '❤️';
+                heart.style.left = (Math.random() * 30) + 'px';
+                btn.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
+            }
+        }
 
-        setTimeout(() => { document.getElementById('splash').classList.add('fade-out'); }, 5000);
+        function toggleModal(id, show) { document.getElementById(id).classList.toggle('hidden', !show); }
+        function openPrivacy() { toggleModal('privacy-modal', true); }
         
-        const b = document.getElementById('bldg');
-        let night = false;
-        setInterval(() => { if(b) { night = !night; b.innerHTML = night ? '🏙️' : '🏢'; } }, 4000);
+        // Mocking the navigation for demo
+        function goToAgreement() { 
+            const n = document.getElementById('reg-name').value || "Brand";
+            document.getElementById('priv-name').innerText = n;
+            enterDashboard(); 
+        }
     </script>
 </body>
 </html>
