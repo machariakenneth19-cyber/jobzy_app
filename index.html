@@ -30,10 +30,19 @@
         .glow-clickable { color: #3b82f6; font-weight: 800; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); animation: pulseText 1.5s infinite; cursor: pointer; text-decoration: underline; }
         @keyframes pulseText { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.02); } }
 
-        /* 4. PROFILE PREVIEW */
-        .profile-circle { width: 100px; height: 100px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; border: 4px solid white; }
-        .blue-tick { position: absolute; bottom: 0; right: 0; background: #3b82f6; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 3px solid white; box-shadow: 0 0 10px rgba(59,130,246,0.5); }
-        .skeleton-line { height: 8px; background: #e2e8f0; border-radius: 4px; margin: 8px auto; }
+        /* 4. PROFILE PREVIEW (HORIZONTAL ALIGNMENT) */
+        .preview-header { display: flex; items-center: center; gap: 12px; background: rgba(255, 255, 255, 0.6); padding: 15px 20px; border-radius: 25px; border: 1px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.03); width: fit-content; margin: 0 auto 20px auto; }
+        .profile-circle { width: 50px; height: 50px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; flex-shrink: 0; }
+        
+        /* THE "BITTEN" STARBURST VERIFIED ICON */
+        .verified-badge {
+            width: 20px; height: 20px; background-color: #0095f6; position: relative; display: inline-block;
+            clip-path: polygon(50% 0%, 61% 10%, 75% 10%, 80% 24%, 94% 25%, 90% 39%, 100% 50%, 90% 61%, 94% 75%, 80% 76%, 75% 90%, 61% 90%, 50% 100%, 39% 90%, 25% 90%, 20% 76%, 6% 75%, 10% 61%, 0% 50%, 10% 39%, 6% 25%, 20% 24%, 25% 10%, 39% 10%);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .verified-badge::after { content: '✓'; color: white; font-size: 11px; font-weight: bold; }
+
+        .skeleton-line { height: 6px; background: #e2e8f0; border-radius: 4px; margin: 6px 0; }
 
         /* 5. TERMS MODAL */
         #terms-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); z-index: 50; display: none; align-items: center; justify-content: center; padding: 20px; }
@@ -84,7 +93,6 @@
 
     <div id="auth-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
         <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[40px] w-full max-w-md shadow-2xl">
-            
             <div id="signup-form">
                 <h2 class="text-3xl font-black text-slate-900 mb-2">Register Brand</h2>
                 <div class="space-y-4 mt-6">
@@ -96,14 +104,13 @@
                         <option value="11-50">11 - 50 Workers</option>
                         <option value="50+">50+ Workers</option>
                     </select>
-                    <input type="password" id="reg-pass" placeholder="Create Password" class="w-full p-4 rounded-2xl">
+                    <input type="password" placeholder="Create Password" class="w-full p-4 rounded-2xl">
                     <button onclick="goToAgreement()" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Continue</button>
                 </div>
                 <p class="text-center mt-8 text-slate-500 text-sm">
                     Already have a brand account? <span class="glow-link ml-1" onclick="toggleAuth()">Login here</span>
                 </p>
             </div>
-
             <div id="login-form" class="hidden">
                 <h2 class="text-3xl font-black text-slate-900 mb-2">Brand Login</h2>
                 <div class="space-y-4 mt-6">
@@ -119,16 +126,21 @@
     </div>
 
     <div id="agreement-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-        <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[45px] w-full max-w-md text-center">
-            <div class="mb-8 p-6 bg-white/50 rounded-3xl border border-white">
-                <div class="profile-circle mx-auto">
-                    <span class="text-4xl text-gray-300">👤</span>
-                    <div class="blue-tick">✓</div>
+        <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[45px] w-full max-w-md text-center shadow-2xl">
+            
+            <div class="preview-header flex items-center justify-center">
+                <div class="profile-circle">
+                    <span class="text-2xl text-gray-300">👤</span>
                 </div>
-                <h3 id="preview-name" class="text-xl font-black mt-4 text-slate-800 tracking-tight">Business Name</h3>
-                <div class="skeleton-line w-3/4 opacity-50"></div>
-                <div class="skeleton-line w-1/2 opacity-50"></div>
+                <h3 id="preview-name" class="text-lg font-black text-slate-800 tracking-tight">Business Name</h3>
+                <div class="verified-badge"></div>
             </div>
+
+            <div class="text-left w-2/3 mx-auto mb-10">
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line w-2/3"></div>
+            </div>
+
             <div class="flex items-start gap-3 text-left mb-10">
                 <input type="checkbox" id="agree-check" class="mt-1 w-5 h-5 accent-blue-600">
                 <label for="agree-check" class="text-sm font-medium text-slate-700">
@@ -182,7 +194,7 @@
         let night = false;
         setInterval(() => { if(b) { night = !night; b.innerHTML = night ? '🏙️' : '🏢'; } }, 4000);
 
-        function handleFinalContinue() { alert("Welcome to the Empire."); }
+        function handleFinalContinue() { alert("Identity Verified. Entering Jobzzy..."); }
     </script>
 </body>
 </html>
