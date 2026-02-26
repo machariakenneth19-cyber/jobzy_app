@@ -181,13 +181,17 @@
     </div>
 
     <script>
-        // --- SUPABASE CONFIG ---
+        // --- FIXED SUPABASE INITIALIZATION ---
         const SUPABASE_URL = "https://hnfhmlghnqlxgdecoetz.supabase.co";
         const SUPABASE_KEY = "sb_publishable_-jtctinLpsT0jdHwxPDmVw_Yb2AZTOo";
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // Fixed: Use createClient from the library window object
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // --- UI LOGIC ---
-        setTimeout(() => { document.getElementById('splash').classList.add('fade-out'); }, 5000);
+        // --- UI LOGIC (RE-ACTIVATED) ---
+        setTimeout(() => { 
+            const splash = document.getElementById('splash');
+            if(splash) splash.classList.add('fade-out'); 
+        }, 5000);
 
         function openHireTalent() {
             document.getElementById('gateway-section').classList.add('hidden');
@@ -201,7 +205,11 @@
 
         const bldg = document.getElementById('bldg');
         let night = false;
-        setInterval(() => { night = !night; bldg.innerHTML = night ? '🏙️' : '🏢'; }, 4000);
+        setInterval(() => { 
+            if(bldg) {
+                night = !night; bldg.innerHTML = night ? '🏙️' : '🏢'; 
+            }
+        }, 4000);
 
         // --- AUTH DATABASE LOGIC ---
         async function handleSignUp() {
@@ -209,7 +217,7 @@
             const password = document.getElementById('reg-password').value;
             const bizName = document.getElementById('reg-name').value;
 
-            const { data, error } = await supabase.auth.signUp({
+            const { data, error } = await _supabase.auth.signUp({
                 email: email,
                 password: password,
                 options: { data: { business_name: bizName } }
@@ -223,7 +231,7 @@
             const email = document.getElementById('log-email').value;
             const password = document.getElementById('log-password').value;
 
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await _supabase.auth.signInWithPassword({
                 email: email,
                 password: password,
             });
