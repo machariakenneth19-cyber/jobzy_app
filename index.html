@@ -23,30 +23,27 @@
         /* 3. NEON GLOWS (SACRED) */
         .glow-frame { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(15px); border: 2px solid rgba(59, 130, 246, 0.5); animation: neonPulse 2.5s infinite; transition: all 0.3s ease; }
         @keyframes neonPulse { 0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.4); } 50% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.7); border-color: #3b82f6; } }
-        
         .glow-link { color: #3b82f6; font-weight: 800; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); animation: textPulse 2s infinite; cursor: pointer; }
-        @keyframes textPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-
         .glow-clickable { color: #3b82f6; font-weight: 800; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); animation: pulseText 1.5s infinite; cursor: pointer; text-decoration: underline; }
         @keyframes pulseText { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.02); } }
 
-        /* 4. PROFILE PREVIEW (HORIZONTAL ALIGNMENT) */
-        .preview-header { display: flex; items-center: center; gap: 12px; background: rgba(255, 255, 255, 0.6); padding: 15px 20px; border-radius: 25px; border: 1px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.03); width: fit-content; margin: 0 auto 20px auto; }
-        .profile-circle { width: 50px; height: 50px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; flex-shrink: 0; }
-        
-        /* THE "BITTEN" STARBURST VERIFIED ICON */
+        /* 4. VERIFIED BADGE (BITTEN STAR) */
         .verified-badge {
-            width: 20px; height: 20px; background-color: #0095f6; position: relative; display: inline-block;
+            width: 18px; height: 18px; background-color: #0095f6; position: relative;
             clip-path: polygon(50% 0%, 61% 10%, 75% 10%, 80% 24%, 94% 25%, 90% 39%, 100% 50%, 90% 61%, 94% 75%, 80% 76%, 75% 90%, 61% 90%, 50% 100%, 39% 90%, 25% 90%, 20% 76%, 6% 75%, 10% 61%, 0% 50%, 10% 39%, 6% 25%, 20% 24%, 25% 10%, 39% 10%);
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-        .verified-badge::after { content: '✓'; color: white; font-size: 11px; font-weight: bold; }
+        .verified-badge::after { content: '✓'; color: white; font-size: 10px; font-weight: bold; }
 
-        .skeleton-line { height: 6px; background: #e2e8f0; border-radius: 4px; margin: 6px 0; }
-
-        /* 5. TERMS MODAL */
-        #terms-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); z-index: 50; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 40px; border-radius: 30px; }
+        /* 5. DASHBOARD SPECIFICS */
+        #dashboard-section { height: 100vh; overflow-y: auto; background: rgba(255,255,255,0.4); backdrop-filter: blur(10px); }
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: white; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding: 15px; z-index: 50; }
+        .profile-hero-circle { width: 150px; height: 150px; border-radius: 50%; background: #e2e8f0; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; margin: 20px auto; position: relative; cursor: pointer; }
+        .home-rectangle { width: 90%; height: 200px; background: rgba(59, 130, 246, 0.1); border-radius: 30px; border: 2px dashed rgba(59, 130, 246, 0.3); margin: 20px auto; display: flex; align-items: center; justify-content: center; }
+        
+        /* 6. MODALS & SETTINGS */
+        #terms-modal, #privacy-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: white; width: 100%; max-width: 500px; padding: 40px; border-radius: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
 
         .hidden { display: none !important; }
         .fade-out { opacity: 0; pointer-events: none; }
@@ -66,100 +63,130 @@
         <p class="text-gray-400 text-sm mt-2 font-medium tracking-widest uppercase">Please wait...</p>
     </div>
 
-    <nav class="fixed top-0 left-0 w-full p-6 z-20">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
-            <span class="text-3xl">💼</span>
-            <span class="text-2xl font-black text-blue-600 tracking-tighter">Jobzzy</span>
-        </div>
-    </nav>
+    <div id="entrance-wrap">
+        <nav class="fixed top-0 left-0 w-full p-6 z-20">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
+                <span class="text-3xl">💼</span>
+                <span class="text-2xl font-black text-blue-600 tracking-tighter">Jobzzy</span>
+            </div>
+        </nav>
 
-    <div id="gateway-section" class="flex flex-col items-center justify-center min-h-screen z-10 p-6">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">Good to see you!</h2>
-            <p class="text-slate-500 text-lg">How can we help you grow today?</p>
+        <div id="gateway-section" class="flex flex-col items-center justify-center min-h-screen z-10 p-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">Good to see you!</h2>
+                <p class="text-slate-500 text-lg">How can we help you grow today?</p>
+            </div>
+            <div class="flex flex-col md:flex-row gap-10">
+                <button onclick="showSection('auth-section')" class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
+                    <div id="bldg" class="text-7xl mb-6">🏢</div>
+                    <span class="text-2xl font-bold text-slate-800">Hire Talent</span>
+                </button>
+                <button class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
+                    <div class="text-7xl mb-6" style="animation: hopAnimation 2s infinite ease-in-out;">🚀</div>
+                    <span class="text-2xl font-bold text-slate-800">Find a Job</span>
+                </button>
+            </div>
         </div>
-        <div class="flex flex-col md:flex-row gap-10">
-            <button onclick="showSection('auth-section')" class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
-                <div id="bldg" class="text-7xl mb-6">🏢</div>
-                <span class="text-2xl font-bold text-slate-800">Hire Talent</span>
-                <p class="text-[10px] text-blue-500 mt-2 font-bold uppercase tracking-widest">For Companies</p>
-            </button>
-            <button class="glow-frame p-12 rounded-[45px] w-72 h-80 flex flex-col items-center justify-center hover:scale-105">
-                <div class="text-7xl mb-6" style="animation: hopAnimation 2s infinite ease-in-out;">🚀</div>
-                <span class="text-2xl font-bold text-slate-800">Find a Job</span>
-            </button>
+
+        <div id="auth-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
+            <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[40px] w-full max-w-md shadow-2xl text-center">
+                <div id="signup-form">
+                    <h2 class="text-3xl font-black text-slate-900 mb-2">Register Brand</h2>
+                    <div class="space-y-4 mt-6">
+                        <input type="text" id="reg-name" placeholder="Business Name" class="w-full p-4 rounded-2xl">
+                        <input type="email" id="reg-email" placeholder="Business Email" class="w-full p-4 rounded-2xl">
+                        <select id="reg-size" class="w-full p-4 rounded-2xl text-slate-500">
+                            <option value="">Team Size (Workers)</option>
+                            <option value="1-10">1 - 10 Workers</option>
+                            <option value="11-50">11 - 50 Workers</option>
+                            <option value="50+">50+ Workers</option>
+                        </select>
+                        <input type="password" id="reg-pass" placeholder="Create Password" class="w-full p-4 rounded-2xl">
+                        <button onclick="goToAgreement()" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="agreement-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
+            <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[45px] w-full max-w-md text-center">
+                <div class="flex items-center justify-center gap-3 mb-8 p-4 bg-white/50 rounded-3xl border border-white">
+                    <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">👤</div>
+                    <h3 id="preview-name" class="font-black text-slate-800">Business Name</h3>
+                    <div class="verified-badge"></div>
+                </div>
+                <div class="flex items-start gap-3 text-left mb-10">
+                    <input type="checkbox" id="agree-check" class="mt-1 w-5 h-5 accent-blue-600">
+                    <label for="agree-check" class="text-sm font-medium">I agree to the <span class="glow-clickable" onclick="toggleModal('terms-modal', true)">Terms & Conditions</span></label>
+                </div>
+                <button onclick="enterDashboard()" id="continue-btn" class="hidden w-full bg-blue-600 text-white font-black p-5 rounded-2xl shadow-xl glow-frame">Continue</button>
+            </div>
         </div>
     </div>
 
-    <div id="auth-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-        <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[40px] w-full max-w-md shadow-2xl">
-            <div id="signup-form">
-                <h2 class="text-3xl font-black text-slate-900 mb-2">Register Brand</h2>
-                <div class="space-y-4 mt-6">
-                    <input type="text" id="reg-name" placeholder="Business Name" class="w-full p-4 rounded-2xl">
-                    <input type="email" id="reg-email" placeholder="Business Email" class="w-full p-4 rounded-2xl">
-                    <select id="reg-size" class="w-full p-4 rounded-2xl text-slate-500">
-                        <option value="">Team Size (Workers)</option>
-                        <option value="1-10">1 - 10 Workers</option>
-                        <option value="11-50">11 - 50 Workers</option>
-                        <option value="50+">50+ Workers</option>
-                    </select>
-                    <input type="password" placeholder="Create Password" class="w-full p-4 rounded-2xl">
-                    <button onclick="goToAgreement()" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Continue</button>
+    <div id="dashboard-section" class="hidden">
+        <header class="p-6 flex items-center justify-between sticky top-0 bg-white/60 backdrop-blur-md z-30">
+            <div class="flex items-center gap-3">
+                <button onclick="openPrivacy()" class="text-2xl p-2 bg-white rounded-xl shadow-sm border border-blue-100">⋮</button>
+                <div class="flex items-center gap-1">
+                    <span id="dash-biz-name" class="font-black text-slate-800 text-lg">Brand</span>
+                    <div class="verified-badge"></div>
                 </div>
-                <p class="text-center mt-8 text-slate-500 text-sm">
-                    Already have a brand account? <span class="glow-link ml-1" onclick="toggleAuth()">Login here</span>
-                </p>
             </div>
-            <div id="login-form" class="hidden">
-                <h2 class="text-3xl font-black text-slate-900 mb-2">Brand Login</h2>
-                <div class="space-y-4 mt-6">
-                    <input type="email" placeholder="Business Email" class="w-full p-4 rounded-2xl">
-                    <input type="password" placeholder="Password" class="w-full p-4 rounded-2xl">
-                    <button class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl mt-4 shadow-lg">Secure Login</button>
-                </div>
-                <p class="text-center mt-8 text-slate-500 text-sm">
-                    Don't have an account? <span class="glow-link ml-1" onclick="toggleAuth()">Sign up here</span>
-                </p>
+            <div onclick="showProfilePage()" class="w-10 h-10 bg-gray-200 rounded-full border-2 border-white shadow-sm overflow-hidden cursor-pointer">
+                <span class="flex items-center justify-center h-full text-xs">👤</span>
             </div>
-        </div>
-    </div>
+        </header>
 
-    <div id="agreement-section" class="hidden flex flex-col items-center justify-center min-h-screen z-10 p-6">
-        <div class="bg-white/40 backdrop-blur-xl border-2 border-white/70 p-10 rounded-[45px] w-full max-w-md text-center shadow-2xl">
+        <main class="pb-32 px-6">
+            <div class="profile-hero-circle" onclick="document.getElementById('file-upload').click()">
+                <span class="text-5xl text-gray-300">👤</span>
+                <input type="file" id="file-upload" class="hidden" accept="image/*">
+            </div>
+            <p class="text-center text-blue-500 font-bold mb-6" onclick="document.getElementById('file-upload').click()">Upload Profile Picture</p>
             
-            <div class="preview-header flex items-center justify-center">
-                <div class="profile-circle">
-                    <span class="text-2xl text-gray-300">👤</span>
+            <div class="home-rectangle">
+                <p class="text-slate-400 font-medium">Post a Job Talent Here</p>
+            </div>
+
+            <div class="space-y-6 mt-10">
+                <div class="h-40 bg-white/60 rounded-3xl border border-white"></div>
+                <div class="h-40 bg-white/60 rounded-3xl border border-white"></div>
+                <div class="h-40 bg-white/60 rounded-3xl border border-white"></div>
+            </div>
+        </main>
+
+        <nav class="nav-bar">
+            <button class="text-blue-600 text-3xl">🏠</button> <button class="text-slate-400 text-3xl">💬</button> <button class="text-yellow-500 text-3xl">🔔</button> </nav>
+    </div>
+
+    <div id="privacy-modal">
+        <div class="modal-content relative">
+            <button onclick="toggleModal('privacy-modal', false)" class="absolute top-6 left-6 text-blue-600 font-bold glow-link">← Go Back</button>
+            <h2 class="text-2xl font-black mt-10 mb-8">Account Privacy</h2>
+            <div class="space-y-6">
+                <div>
+                    <label class="text-xs font-bold text-slate-400 uppercase">Business Name</label>
+                    <p id="priv-name" class="text-slate-800 font-bold border-b pb-2">Business Name</p>
                 </div>
-                <h3 id="preview-name" class="text-lg font-black text-slate-800 tracking-tight">Business Name</h3>
-                <div class="verified-badge"></div>
+                <div>
+                    <label class="text-xs font-bold text-slate-400 uppercase">Email Address</label>
+                    <p id="priv-email" class="text-slate-800 font-bold border-b pb-2">email@business.com</p>
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-slate-400 uppercase">Password</label>
+                    <p class="text-slate-800 font-bold border-b pb-2">••••••••••••</p>
+                </div>
+                <button class="w-full py-4 bg-blue-50 rounded-2xl text-blue-600 font-bold border border-blue-200 mt-4">Change Password</button>
             </div>
-
-            <div class="text-left w-2/3 mx-auto mb-10">
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line w-2/3"></div>
-            </div>
-
-            <div class="flex items-start gap-3 text-left mb-10">
-                <input type="checkbox" id="agree-check" class="mt-1 w-5 h-5 accent-blue-600">
-                <label for="agree-check" class="text-sm font-medium text-slate-700">
-                    I have read and I agree to the <span class="glow-clickable" onclick="toggleModal(true)">Terms</span> and <span class="glow-clickable" onclick="toggleModal(true)">Conditions</span>
-                </label>
-            </div>
-            <button onclick="handleFinalContinue()" id="continue-btn" class="hidden w-full bg-blue-600 text-white font-black p-5 rounded-2xl shadow-xl glow-frame">Continue</button>
         </div>
     </div>
 
     <div id="terms-modal">
-        <div class="modal-content text-left">
-            <h1 class="text-3xl font-black text-blue-600 mb-6">Terms & Conditions</h1>
-            <div class="space-y-6 text-slate-600 text-sm">
-                <p><strong>1. NO REFUNDS:</strong> All payments are final once the brand verification is complete.</p>
-                <p><strong>2. RESPECT:</strong> No rudeness toward workers is permitted. Harassment leads to an instant ban.</p>
-                <p><strong>3. LEGAL:</strong> You must follow international business and labor laws.</p>
-            </div>
-            <button onclick="toggleModal(false)" class="mt-10 w-full bg-slate-900 text-white p-4 rounded-xl font-bold">Close</button>
+        <div class="modal-content">
+            <h1 class="text-2xl font-black text-blue-600 mb-4">Terms & Conditions</h1>
+            <p class="text-slate-600 text-sm">You agree to follow all global labor laws and treat workers with respect...</p>
+            <button onclick="toggleModal('terms-modal', false)" class="mt-8 w-full bg-slate-900 text-white p-4 rounded-2xl font-bold">Close</button>
         </div>
     </div>
 
@@ -167,7 +194,7 @@
         const _supabase = supabase.createClient("https://hnfhmlghnqlxgdecoetz.supabase.co", "sb_publishable_-jtctinLpsT0jdHwxPDmVw_Yb2AZTOo");
 
         function showSection(id) {
-            document.querySelectorAll('#gateway-section, #auth-section, #agreement-section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('#gateway-section, #auth-section, #agreement-section, #dashboard-section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
@@ -177,12 +204,22 @@
         }
 
         function goToAgreement() {
-            const bizName = document.getElementById('reg-name').value || "Your Business";
-            document.getElementById('preview-name').innerText = bizName;
+            const name = document.getElementById('reg-name').value || "Brand";
+            document.getElementById('preview-name').innerText = name;
+            document.getElementById('dash-biz-name').innerText = name;
+            document.getElementById('priv-name').innerText = name;
+            document.getElementById('priv-email').innerText = document.getElementById('reg-email').value;
             showSection('agreement-section');
         }
 
-        function toggleModal(show) { document.getElementById('terms-modal').style.display = show ? 'flex' : 'none'; }
+        function toggleModal(id, show) { document.getElementById(id).style.display = show ? 'flex' : 'none'; }
+
+        function enterDashboard() {
+            document.getElementById('entrance-wrap').classList.add('hidden');
+            showSection('dashboard-section');
+        }
+
+        function openPrivacy() { toggleModal('privacy-modal', true); }
 
         document.getElementById('agree-check').addEventListener('change', function() {
             document.getElementById('continue-btn').classList.toggle('hidden', !this.checked);
@@ -193,8 +230,6 @@
         const b = document.getElementById('bldg');
         let night = false;
         setInterval(() => { if(b) { night = !night; b.innerHTML = night ? '🏙️' : '🏢'; } }, 4000);
-
-        function handleFinalContinue() { alert("Identity Verified. Entering Jobzzy..."); }
     </script>
 </body>
 </html>
